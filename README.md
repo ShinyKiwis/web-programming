@@ -18,4 +18,4 @@ Simply runs: `python generator.py [controller_name_in_plurals]`
 2. Access the website at `http://localhost:8080`
 
 # How to setup database ?
-Simply try to run `scripts.sql`
+Simply try to run `scripts.sql` in `Adminer`
