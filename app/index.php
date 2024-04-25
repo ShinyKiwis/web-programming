@@ -1,7 +1,9 @@
 <?php
 $routes = [
   "/register" => 'UsersController#new',
-  "/login" => 'SessionsController#new'
+  "/login" => 'SessionsController#new',
+  "/profile" => 'TempController#profile',
+  "/edit_profile" => 'TempController#edit_profile'
 ];
 
 $url = $_SERVER['REQUEST_URI'];
