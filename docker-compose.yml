@@ -13,7 +13,9 @@ services:
       - mysql
 
   php:
-    image: php:8.2-fpm
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - ./app:/var/www/html
     depends_on:

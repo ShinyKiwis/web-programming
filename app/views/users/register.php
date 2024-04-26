@@ -10,34 +10,51 @@
     <span class="blue-logo">
       Work Seekers
     </span>
-    <form>
+    <form action="post_index.php" method="POST" style="width: 25em;">
+      <input type="hidden" name="action" value="create_user">
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="john@doe.com">
+        <input type="email" class="form-control" name="email" id="email" placeholder="john@doe.com" required>
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="Your secret password">
+        <input type="password" class="form-control" name="password" id="password" placeholder="Your secret password" required>
       </div>
+      <p id="password-error" class="text-danger"></p>
       <div class="mb-3">
         <label>Who are you ?</label>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="userType" id="candidate" checked>
+          <input class="form-check-input" type="radio" name="userType" id="candidate" value="candidate" checked>
           <label class="form-check-label" for="candidate">
             <span>Candidate</span> - Who are looking for jobs
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="userType" id="employer">
+          <input class="form-check-input" type="radio" name="userType" id="employer" value="employer">
           <label class="form-check-label" for="employer">
             <span>Employer</span> - Who are looking for someone to hire
           </label>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary mt-2" style="width: 100%">Register</button>
+      <button type="submit" id="submit" class="btn btn-primary mt-2" style="width: 100%">Register</button>
       <div class="my-2">
         Already have an account ? <a href="/login" class="blue-link">Login</a>
       </div>
     </form>
   </div>
 </div>
+<script>
+$("#password").on("input", function() {
+  const password = $(this).val();
+  const pattern = /^(?=.*\d)(?=.*[A-Z]).{8,}$/;
+  const passwordError = $("#password-error");
+  const submitButton = $("#submit");
+  if (pattern.test(password) || password == "") {
+    passwordError.text("");
+    submitButton.prop("disabled", false);
+  } else {
+    passwordError.text("Password must be at least 8 characters long and contain at least one digit and one uppercase letter.");
+    submitButton.prop("disabled", true);
+  }
+}) 
+</script>
