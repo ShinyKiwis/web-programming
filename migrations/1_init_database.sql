@@ -1,30 +1,39 @@
 CREATE TABLE `Users` (
   `id` integer PRIMARY KEY,
-  `type` string,
-  `username` string,
-  `password` string,
-  `email` string
+  `type` VARCHAR(255),
+  `username` VARCHAR(255),
+  `password` VARCHAR(255),
+  `email` VARCHAR(255),
+  `address_id` integer
+);
+
+CREATE TABLE `Addresses` (
+  `id` integer PRIMARY KEY,
+  `address` VARCHAR(255),
+  `ward` VARCHAR(255),
+  `district` VARCHAR(255),
+  `city` VARCHAR(255)
 );
 
 CREATE TABLE `Companies` (
   `id` integer PRIMARY KEY,
-  `name` string,
-  `description` string,
+  `name` VARCHAR(255),
+  `description` VARCHAR(255),
   `size` integer,
   `contact_info` integer,
-  `address` string,
+  `address_id` integer,
   `owner_id` integer
 );
 
 CREATE TABLE `Jobs` (
   `id` integer PRIMARY KEY,
-  `name` string,
-  `description` string,
-  `requirements` string,
-  `salary` string,
+  `name` VARCHAR(255),
+  `description` VARCHAR(255),
+  `requirements` VARCHAR(255),
+  `salary` VARCHAR(255),
   `expiration` date,
-  `location` string,
-  `benefits` string,
+  `location` VARCHAR(255),
+  `benefits` VARCHAR(255),
   `company_id` integer
 );
 
@@ -36,19 +45,22 @@ CREATE TABLE `JobsTags` (
 
 CREATE TABLE `Tags` (
   `id` integer PRIMARY KEY,
-  `name` string
+  `name` VARCHAR(255)
 );
 
 CREATE TABLE `CVs` (
   `id` integer PRIMARY KEY,
-  `career_goal` string,
-  `experiences` string,
-  `degrees` string,
-  `skills` string[],
-  `languages` string[],
+  `career_goal` VARCHAR(255),
+  `experiences` VARCHAR(255),
+  `highest_degree` VARCHAR(255),
+  `current_position` VARCHAR(255),
+  `skills` VARCHAR(255),
+  `languages` VARCHAR(255),
   `owner_id` integer,
   `willing_to_relocation` boolean,
-  `location` string
+  `location` VARCHAR(255),
+  `desired_job_location` VARCHAR(255),
+  `desired_job_salary` integer
 );
 
 CREATE TABLE `JobsCVs` (
@@ -57,16 +69,21 @@ CREATE TABLE `JobsCVs` (
   PRIMARY KEY (`job_id`, `cv_id`)
 );
 
-CREATE TABLE `CVsSkills` (
+CREATE TABLE `CVsExperiences` (
   `cv_id` integer,
-  `skill_id` integer,
-  PRIMARY KEY (`cv_id`, `skill_id`)
+  `experience_id` integer,
+  PRIMARY KEY (`cv_id`, `experience_id`)
 );
 
-CREATE TABLE `Skills` (
+CREATE TABLE `Experiences` (
   `id` integer PRIMARY KEY,
-  `title` string,
-  `year_of_experiences` number
+  `position` VARCHAR(255),
+  `company_id` integer,
+  `startDate` date,
+  `endDate` date,
+  `description` VARCHAR(255),
+  `company_name` VARCHAR(255),
+  `type` VARCHAR(255)
 );
 
 ALTER TABLE `Companies` ADD FOREIGN KEY (`owner_id`) REFERENCES `Users` (`id`);
@@ -75,10 +92,6 @@ ALTER TABLE `JobsTags` ADD FOREIGN KEY (`job_id`) REFERENCES `Jobs` (`id`);
 
 ALTER TABLE `JobsTags` ADD FOREIGN KEY (`tag_id`) REFERENCES `Tags` (`id`);
 
-ALTER TABLE `CVsSkills` ADD FOREIGN KEY (`cv_id`) REFERENCES `CVs` (`id`);
-
-ALTER TABLE `CVsSkills` ADD FOREIGN KEY (`skill_id`) REFERENCES `Skills` (`id`);
-
 ALTER TABLE `JobsCVs` ADD FOREIGN KEY (`cv_id`) REFERENCES `CVs` (`id`);
 
 ALTER TABLE `JobsCVs` ADD FOREIGN KEY (`job_id`) REFERENCES `Jobs` (`id`);
@@ -86,3 +99,13 @@ ALTER TABLE `JobsCVs` ADD FOREIGN KEY (`job_id`) REFERENCES `Jobs` (`id`);
 ALTER TABLE `Jobs` ADD FOREIGN KEY (`company_id`) REFERENCES `Companies` (`id`);
 
 ALTER TABLE `CVs` ADD FOREIGN KEY (`owner_id`) REFERENCES `Users` (`id`);
+
+ALTER TABLE `CVsExperiences` ADD FOREIGN KEY (`cv_id`) REFERENCES `CVs` (`id`);
+
+ALTER TABLE `CVsExperiences` ADD FOREIGN KEY (`experience_id`) REFERENCES `Experiences` (`id`);
+
+ALTER TABLE `Experiences` ADD FOREIGN KEY (`company_id`) REFERENCES `Companies` (`id`);
+
+ALTER TABLE `Users` ADD FOREIGN KEY (`address_id`) REFERENCES `Addresses` (`id`);
+
+ALTER TABLE `Companies` ADD FOREIGN KEY (`address_id`) REFERENCES `Addresses` (`id`);
