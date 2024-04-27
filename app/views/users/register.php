@@ -13,6 +13,10 @@
     <form action="post_index.php" method="POST" style="width: 25em;">
       <input type="hidden" name="action" value="create_user">
       <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" name="username" id="username" placeholder="John Doe" required>
+      </div>
+      <div class="mb-3">
         <label for="email" class="form-label">Email</label>
         <input type="email" class="form-control" name="email" id="email" placeholder="john@doe.com" required>
       </div>

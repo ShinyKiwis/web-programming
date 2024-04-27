@@ -1,5 +1,5 @@
 CREATE TABLE `Users` (
-  `id` integer PRIMARY KEY,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `type` VARCHAR(255),
   `username` VARCHAR(255),
   `password` VARCHAR(255),
@@ -8,7 +8,7 @@ CREATE TABLE `Users` (
 );
 
 CREATE TABLE `Addresses` (
-  `id` integer PRIMARY KEY,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `address` VARCHAR(255),
   `ward` VARCHAR(255),
   `district` VARCHAR(255),
@@ -16,7 +16,7 @@ CREATE TABLE `Addresses` (
 );
 
 CREATE TABLE `Companies` (
-  `id` integer PRIMARY KEY,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `name` VARCHAR(255),
   `description` VARCHAR(255),
   `size` integer,
@@ -26,7 +26,7 @@ CREATE TABLE `Companies` (
 );
 
 CREATE TABLE `Jobs` (
-  `id` integer PRIMARY KEY,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `name` VARCHAR(255),
   `description` VARCHAR(255),
   `requirements` VARCHAR(255),
@@ -44,12 +44,12 @@ CREATE TABLE `JobsTags` (
 );
 
 CREATE TABLE `Tags` (
-  `id` integer PRIMARY KEY,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `name` VARCHAR(255)
 );
 
 CREATE TABLE `CVs` (
-  `id` integer PRIMARY KEY,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `career_goal` VARCHAR(255),
   `experiences` VARCHAR(255),
   `highest_degree` VARCHAR(255),
@@ -76,7 +76,7 @@ CREATE TABLE `CVsExperiences` (
 );
 
 CREATE TABLE `Experiences` (
-  `id` integer PRIMARY KEY,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `position` VARCHAR(255),
   `company_id` integer,
   `startDate` date,

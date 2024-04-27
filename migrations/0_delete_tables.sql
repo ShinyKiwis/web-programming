@@ -1,0 +1,12 @@
+SET foreign_key_checks = 0;
+DROP TABLE IF EXISTS `Addresses`;
+DROP TABLE IF EXISTS `CVs`;
+DROP TABLE IF EXISTS `CVsExperiences`;
+DROP TABLE IF EXISTS `Companies`;
+DROP TABLE IF EXISTS `Experiences`;
+DROP TABLE IF EXISTS `Jobs`;
+DROP TABLE IF EXISTS `JobsCVs`;
+DROP TABLE IF EXISTS `JobsTags`;
+DROP TABLE IF EXISTS `Tags`;
+DROP TABLE IF EXISTS `Users`;
+SET foreign_key_checks = 1;
