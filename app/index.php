@@ -2,7 +2,8 @@
 $routes = [
   "/register" => 'UsersController#new',
   "/login" => 'SessionsController#new',
-  "/feeds" => 'PagesController#feeds',
+  "/logout" => 'SessionsController#destroy',
+  "/home" => 'PagesController#home',
   "/profile" => 'TempController#profile',
   "/edit_profile" => 'TempController#edit_profile'
 ];

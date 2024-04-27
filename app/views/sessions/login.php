@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(isset($_SESSION['user_id'])) {
-  header("Location: http://localhost:8080/feeds");
+  header("Location: http://localhost:8080/home");
   exit();
 }
 ?>
@@ -50,7 +50,7 @@ $("#login-form").on("submit", function(event) {
       if (response.status == "error") {
         $("#login-error").text(response.message);
       } else {
-        window.location.href = "http://localhost:8080/feeds"
+        window.location.href = "http://localhost:8080/home"
       }
     }
   })

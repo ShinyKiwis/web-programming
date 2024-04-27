@@ -30,5 +30,11 @@ class SessionsController {
       exit(json_encode(array("status" => "error", "message" => "Email doesn't exist in our system!")));
     }
   }
+
+  public function destroy() {
+    session_start();
+    session_destroy();
+    header("Location: " . "http://localhost:8080/login");
+  }
 }
 ?>

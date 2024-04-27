@@ -109,3 +109,7 @@ form label {
 .welcome-msg p {
   font-weight: 500;
 }
+
+.dropdown-menu {
+  --bs-dropdown-link-active-bg: #e6e6e6 !important;
+}
