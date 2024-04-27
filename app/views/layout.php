@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Work Seekers</title>
+  <title><?php echo isset($pageTitle) ? $pageTitle : "Work Seekers"; ?></title>
   <link rel="stylesheet" href="views/css/main.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
   <header>
     <?php
       $current_path = $_SERVER['REQUEST_URI']; 
-      if(strcmp($current_path,"login") == 0 || strcmp($current_path,"register") == 0) {
+      $excludeHeaderPaths = array("/login", "/register");
+      if (!in_array($current_path, $excludeHeaderPaths)) {
         include('components/header.php');
       }
     ?>

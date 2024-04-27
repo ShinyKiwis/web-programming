@@ -10,7 +10,8 @@
     <span class="blue-logo">
       Work Seekers
     </span>
-    <form action="post_index.php" method="POST" style="width: 25em;">
+    <p id="register-error" class="text-danger"></p>
+    <form id="register-form" style="width: 25em;">
       <input type="hidden" name="action" value="create_user">
       <div class="mb-3">
         <label for="username" class="form-label">Username</label>
@@ -61,4 +62,22 @@ $("#password").on("input", function() {
     submitButton.prop("disabled", true);
   }
 }) 
+
+$("#register-form").on("submit", function(event) {
+  event.preventDefault();
+  $.ajax({
+    type: "POST",
+    url: "post_index.php",
+    data: $(this).serialize(),
+    dataType: "json",
+    success: function(response) {
+      if (response.status == "error") {
+        $("#register-error").text(response.message);
+      } else {
+        window.location.href = "http://localhost:8080/welcome";
+      }
+    }
+  })
+
+})
 </script>

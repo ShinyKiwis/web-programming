@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(isset($_SESSION['user_id'])) {
+  header("Location: http://localhost:8080/feeds");
+  exit();
+}
+?>
 <div class="row">
   <div class="col px-4 py-2 d-none d-lg-block" style="height: 100vh">
     <img 
@@ -10,14 +17,16 @@
     <span class="blue-logo">
       Work Seekers
     </span>
-    <form>
+    <p id="login-error" class="text-danger"></p>
+    <form id="login-form" style="width:25em;">
+      <input type="hidden" name="action" value="login">
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="john@doe.com">
+        <input type="email" name="email" class="form-control" id="email" placeholder="john@doe.com" required>
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="Your secret password">
+        <input type="password" name="password" class="form-control" id="password" placeholder="Your secret password" required>
       </div>
       <div style="text-align: end;" class="my-2 mb-4">
         <a href="#" class="gray-link">Forgot your password ?</a>
@@ -29,3 +38,21 @@
     </form>
   </div>
 </div>
+<script>
+$("#login-form").on("submit", function(event) {
+  event.preventDefault();
+  $.ajax({
+    type: "POST",
+    url: "post_index.php",
+    data: $(this).serialize(),
+    dataType: "json",
+    success: function(response) {
+      if (response.status == "error") {
+        $("#login-error").text(response.message);
+      } else {
+        window.location.href = "http://localhost:8080/feeds"
+      }
+    }
+  })
+})
+</script>

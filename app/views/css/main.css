@@ -99,3 +99,13 @@ form label {
 .blue-link:hover {
   color: var(--lightblue) !important;
 }
+
+.welcome-msg {
+  text-align: center;
+  margin-top: 10em;
+  font-size: 1.2em;
+}
+
+.welcome-msg p {
+  font-weight: 500;
+}
