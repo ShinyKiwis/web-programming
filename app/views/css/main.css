@@ -89,7 +89,11 @@ form label {
   background-color: var(--blue) !important;
   border-color: var(--blue) !important;
 }
-
+.form-control {
+  height: 2em;
+  display: inline-block;
+  margin-bottom: 5px;
+}
 .gray-link {
   color: var(--gray) !important;
 }
@@ -158,14 +162,13 @@ form label {
   background-color: var(--white);
   border-radius: 0.4em;
   border: 2px solid #E3E3E3;
-  height: 88vh;
+  height: 100vh;
 }
 
 #profile-header img {
   width: 10em;
   height: 10em;
 }
-
 #profile-header p {
   display: flex;
   gap: 1em;
