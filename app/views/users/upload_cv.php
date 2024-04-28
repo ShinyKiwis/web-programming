@@ -6,9 +6,9 @@ if (session_status() === PHP_SESSION_NONE) {
 <div class="row mt-4 px-5">
   <div class="col-2 d-flex flex-column gap-4" id="profile-actions">
     <button><a href="/profile/edit"><i class="fa-solid fa-pen"></i><span>Edit your profile</span></a></button>
-    <button id="active"><a><i class="fa-solid fa-user"></i><span>My profile</span></a></button>
+    <button><a href="/profile"><i class="fa-solid fa-user"></i><span>My profile</span></a></button>
     <button><a><i class="fa-solid fa-suitcase"></i><span>My applied jobs</span></a></button>
-    <button><a href="/profile/cv"><i class="fa-solid fa-file"></i><span>My CV</span></a></button>
+    <button id="active"><a href="/profile/cv"><i class="fa-solid fa-file"></i><span>My CV</span></a></button>
   </div>
   <div class="col-10 p-4 h-100" id="profile">
     <div class="row" id="profile-header">
@@ -33,36 +33,41 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
       </div>
     </div>
-    <div class="profile-section mt-2" id="desired-job">
-      <p>Desired Job</p>
-      <div class="row">
-        <p class="col-2">Location</p>
-        <p class="col-2 prompt">Edit to add location</p>
-      </div>
-      <div class="row">
-        <p class="col-2">Expected Salary</p>
-        <p class="col-2 prompt">Edit to add expected salary</p>
-      </div>
-    </div> 
-    <div class="profile-section" id="career-goals">
-      <p>Career Goals</p>
-      <p class="prompt">Edit to add career goals</p>
-    </div> 
-    <div class="profile-section" id="experiences">
-      <p>Experiences</p>
-      <p class="prompt">Edit to add experiences</p>
-    </div> 
-    <div class="profile-section" id="education">
-      <p>Education</p>
-      <p class="prompt">Edit to add education</p>
-    </div> 
-    <div class="profile-section" id="skills">
-      <p>Skills</p>
-      <p class="prompt">Edit to add skills</p>
-    </div> 
-    <div class="profile-section" id="languages">
-      <p>Languages</p>
-      <p class="prompt">Edit to add languages</p>
+    <div class="profile-section mt-2" id="profile-cv">
+      <p>Your CV</p>
+      <form id="upload-cv-form">
+        <input type="hidden" name="action" value="upload_cv">
+        <input type="file" name="cv" id="upload-cv" style="display:none">
+        <input type="hidden" name="user_id" id="user_id" value=<?php echo $_SESSION['user_id'] ?>>
+        <button type="submit" class="btn btn-primary ms-auto">Upload CV</button>
+      </form>
+      <div id="cv-viewer" class="mt-4" style="height: 25em;"></div>
     </div> 
   </div>
 </div>
+<script>
+$("#upload-cv-form").on("submit", function(event) {
+  event.preventDefault();
+  $("#upload-cv").click();
+})
+
+$("#upload-cv").on("change", function() {
+  const uploadedFiles = $("#upload-cv")[0];
+  if(uploadedFiles.files.length > 0) {
+    const formData = new FormData($("#upload-cv-form")[0]);
+    $.ajax({
+      type: "POST",
+      url: "/post_index.php",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function(response) {
+        console.log(response)
+        const blob = new Blob([response], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        PDFObject.embed(url, "#cv-viewer");
+      }
+    }) 
+  }
+});
+</script>

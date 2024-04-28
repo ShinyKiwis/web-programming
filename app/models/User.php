@@ -44,5 +44,43 @@ class User {
       echo "Error: " . $sql . "<br>" . $conn->error;
     }
   }
+
+  public static function get_user_by_id($id) {
+    $conn = Database::getInstance()->getConnection();
+    $sql = "SELECT * FROM Users WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+
+    if ($stmt->execute()) {
+      $result = $stmt->get_result();
+      if ($result->num_rows === 1) {
+        $user = $result->fetch_assoc();
+        $stmt->close();
+        return $user;
+      }
+    }
+  }
+
+  public static function upload_cv($postData, $user_id) {
+    $uploadDirectory = __DIR__ . '/../data/cvs/';
+    chmod($uploadDirectory, 0777);
+    $fileName = $user_id . ".pdf";
+    $filePath = $uploadDirectory . $fileName;
+    move_uploaded_file($postData['cv']['tmp_name'], $filePath);
+    if (file_exists($filePath)) {
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: inline; filename="' . $fileName . '"');
+        header('Content-Length: ' . filesize($filePath));
+        readfile($filePath);
+        exit;
+    } else {
+        http_response_code(404);
+        echo 'File not found.';
+    }
+  }
+  
+  public static function get_cv_by_id($user_id) {
+
+  }
 }
 ?>

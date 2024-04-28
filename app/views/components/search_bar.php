@@ -11,15 +11,17 @@
       <option value="2">Two</option>
       <option value="3">Three</option>
     </select>
-    <select class="selectpicker" title="Job type" data-live-search="true" data-allow-clear="true">
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
+    <select class="selectpicker" title="Work arrangements" data-allow-clear="true">
+      <option value="onsite">On site</option>
+      <option value="remote">Remote</option>
+      <option value="hybrid">Hybrid</option>
     </select>
-    <select class="selectpicker" title="Experiences" data-live-search="true" data-allow-clear="true">
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
+    <select class="selectpicker" title="Levels" data-allow-clear="true">
+      <option value="intern">Intern/Student</option>
+      <option value="fresher">Fresher/Entry level</option>
+      <option value="experienced">Experienced (non-manager)</option>
+      <option value="manager">Manager</option>
+      <option value="director">Director and above</option>
     </select>
     <button type="submit" class="btn btn-primary ms-auto">Search</button>
   </form>

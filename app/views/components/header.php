@@ -12,7 +12,7 @@
         </li>
         <li class="nav-item">
           <i class="fa-solid fa-suitcase"></i>
-          <a class="nav-link" href="#">Jobs</a>
+          <a class="nav-link" href="#">Applied Jobs</a>
         </li>
         <li class="nav-item">
           <i class="fa-solid fa-building"></i>
