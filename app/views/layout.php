@@ -20,7 +20,7 @@
       }
     ?>
   </header>
-  <main style="overflow: hidden; height: 100%;">
+  <main style="overflow: auto; height: 100vh;">
     <?php
       if (!in_array($current_path, $excludeSearchBarPaths) && !in_array($current_path, $excludeHeaderPaths)) {
         include ('components/search_bar.php');
