@@ -10,7 +10,7 @@ class TempController {
 
   public function edit_profile() {
     ob_start();
-    include(self::DEFAULT_VIEW_FOLDER . 'profile.php');
+    include(self::DEFAULT_VIEW_FOLDER . 'edit_profile.php');
     $content = ob_get_clean();
     return $content;
   }

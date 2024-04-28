@@ -5,7 +5,7 @@ $routes = [
   "/logout" => 'SessionsController#destroy',
   "/home" => 'PagesController#home',
   "/profile" => 'TempController#profile',
-  "/edit_profile" => 'TempController#edit_profile'
+  "/profile/edit" => 'TempController#edit_profile'
 ];
 
 $url = $_SERVER['REQUEST_URI'];

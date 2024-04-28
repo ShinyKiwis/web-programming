@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php echo isset($pageTitle) ? $pageTitle : "Work Seekers"; ?></title>
-  <link rel="stylesheet" href="views/css/main.css">
+  <link rel="stylesheet" href="/views/css/main.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -14,14 +14,17 @@
     <?php
       $current_path = $_SERVER['REQUEST_URI']; 
       $excludeHeaderPaths = array("/login", "/register");
+      $excludeSearchBarPaths = array("/profile", "/profile/edit");
       if (!in_array($current_path, $excludeHeaderPaths)) {
         include('components/header.php');
       }
     ?>
   </header>
-  <main class="pb-4" style="overflow: auto; height: 100vh;">
+  <main style="overflow: hidden; height: 100%;">
     <?php
-      include ('components/search_bar.php');
+      if (!in_array($current_path, $excludeSearchBarPaths) && !in_array($current_path, $excludeHeaderPaths)) {
+        include ('components/search_bar.php');
+      }
       echo $content;
     ?>
 

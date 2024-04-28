@@ -4,6 +4,8 @@
 :root {
   --blue: #1A59B7;
   --lightblue: #3566b0;
+  --transparentBlue: #E2EEFF;
+  --background: #F8F8F8;
   --white: #FFFFFF;
   --gray: #C6C6C6;
   --black: #000;
@@ -11,6 +13,10 @@
 
 * {
   font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: var(--background) !important;
 }
 
 .logo {
@@ -112,4 +118,65 @@ form label {
 
 .dropdown-menu {
   --bs-dropdown-link-active-bg: #e6e6e6 !important;
+}
+
+#profile-actions {
+  padding-left: 0em;
+  padding-right: 2em;
+}
+
+#profile-actions button {
+  background-color: var(--white) !important;
+  border-radius: 0.4em;
+  padding: 0.8em 1.5em;
+  border: 2px solid #E3E3E3;
+  font-size: 1em;
+}
+
+#profile-actions a {
+  display: flex;
+  gap: 1.5em;
+  align-items: center;
+  text-decoration: none;
+  color: var(--black) !important;
+}
+
+#profile-actions button:hover {
+  background-color: #e6e6e6 !important;
+}
+
+#profile-actions #active {
+  background-color: var(--transparentBlue) !important;
+  border: 2px solid var(--blue);
+}
+
+#profile-actions #active a {
+  color: var(--blue) !important;
+}
+
+#profile {
+  background-color: var(--white);
+  border-radius: 0.4em;
+  border: 2px solid #E3E3E3;
+  height: 88vh;
+}
+
+#profile-header img {
+  width: 10em;
+  height: 10em;
+}
+
+#profile-header p {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+
+.profile-section > p:first-child {
+  font-weight: 500;
+  font-size: 1.4em;
+}
+
+.prompt {
+  color: var(--gray);
 }
