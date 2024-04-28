@@ -32,24 +32,25 @@
       <p>Desired Job</p>
       <div class="row">
         <p class="col-2">Location</p>
-        <p class="col-2 prompt">Edit to add location</p>
+        <input type="text" class="form-control" value="Edit Location">
       </div>
       <div class="row">
         <p class="col-2">Expected Salary</p>
-        <p class="col-2 prompt">Edit to add expected salary</p>
+        <input type="text" class="form-control" value="Edit Expected Salary">
       </div>
     </div> 
     <div class="profile-section" id="career-goals">
       <p>Career Goals</p>
-      <p class="prompt">Edit to add career goals</p>
+      <input type="text" class="form-control" value="Edit your Career Goals">
     </div> 
     <div class="profile-section" id="experiences">
       <p>Experiences</p>
+      <input type="text" class="form-control" value="Edit your experiences">
       <p class="prompt">Edit to add experiences</p>
     </div> 
     <div class="profile-section" id="education">
       <p>Education</p>
-      <p class="prompt">Edit to add education</p>
+      <input type="text" class="form-control" value="Edit your education">
     </div> 
     <div class="profile-section" id="skills">
       <p>Skills</p>
