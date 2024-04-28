@@ -23,10 +23,10 @@
           <div class="col-3">
           <p><i class="fa-solid fa-suitcase"></i><input type="text" class="form-control" value="Junior Backend Engineer"></p>
             <p><i class="fa-solid fa-envelope"></i><input type="text" class="form-control" value="johndoe@gmail.com"></p>
-            <p><i class="fa-solid fa-house"></i><input type="text" class="form-control" value="Edit to add your address"></p>
+            <p><i class="fa-solid fa-house"></i><input type="text" class="form-control" placeholder="Edit to add your address"></p>
           </div>
           <div class="col-4">
-            <p><i class="fa-solid fa-user-graduate"></i><input type="text" class="form-control" value="Edit to add your highest degree"></p>
+            <p><i class="fa-solid fa-user-graduate"></i><input type="text" class="form-control" placeholder="Edit to add your highest degree"></p>
           </div>
         </div>
       </div>
@@ -35,24 +35,24 @@
       <p>Desired Job</p>
       <div class="row">
         <p class="col-2">Location</p>
-        <p class="col-2"><input type="text" class="form-control" value="Edit Location"></p>
+        <p class="col-2"><input type="text" class="form-control" placeholder="Edit Location"></p>
       </div>
       <div class="row">
         <p class="col-2">Expected Salary</p>
-        <div class="col-2"><input type="text" class="form-control" value="Edit Expected Salary"></div>
+        <div class="col-2"><input type="text" class="form-control" placeholder="Edit Expected Salary"></div>
       </div>
     </div> 
     <div class="profile-section" id="career-goals">
       <p>Career Goals</p>
-      <div><input type="text" class="form-control" value="Edit your Career Goals"></div>
+      <div><input type="text" class="form-control" placeholder="Edit your Career Goals"></div>
     </div> 
     <div class="profile-section" id="experiences">
       <p>Experiences</p>
-      <input type="text" class="form-control" value="Edit your experiences">    
+      <input type="text" class="form-control" placeholder="Edit your experiences">    
     </div> 
     <div class="profile-section" id="education">
       <p>Education</p>
-      <input type="text" class="form-control" value="Edit your education">
+      <input type="text" class="form-control" placeholder="Edit your education">
     </div> 
     <div class="profile-section" id="skills">
       <p>Skills</p>
