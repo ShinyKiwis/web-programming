@@ -1,10 +1,3 @@
-<?php
-session_start();
-if(!isset($_SESSION['user_id'])) {
-    header("Location: http://localhost:8080/login");
-    exit();
-}
-?>
 <div class="mx-5 mt-4 d-flex gap-4">
   <div class="card mb-3 col px-4 py-2">
     <div class="row">

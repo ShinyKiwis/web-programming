@@ -2,6 +2,9 @@
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+if(!isset($_SESSION['user'])) {
+  header("Location: " . "http://localhost:8080/home");
+}
 ?>
 <div class="row mt-4 px-5">
   <div class="col-2 d-flex flex-column gap-4" id="profile-actions">

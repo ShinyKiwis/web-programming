@@ -11,8 +11,14 @@
           <a class="nav-link" aria-current="page" href="/home">Home</a>
         </li>
         <li class="nav-item">
-          <i class="fa-solid fa-suitcase"></i>
-          <a class="nav-link" href="#">Applied Jobs</a>
+          <?php if(isset($_SESSION['user'])) {
+            echo '<i class="fa-solid fa-suitcase"></i>';
+            if($_SESSION['user']['type'] == 'candidate') {
+              echo '<a class="nav-link" href="#">Applied Jobs</a>';
+            } else {
+              echo '<a class="nav-link" href="#">Listed Jobs</a>';
+            }
+          }?>
         </li>
         <li class="nav-item">
           <i class="fa-solid fa-building"></i>
@@ -22,8 +28,14 @@
       <div class="dropdown">
         <i class="fa-solid fa-circle-user" id="profile-icon" data-bs-toggle="dropdown" aria-expanded="false"></i>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile-icon">
-          <li><a class="dropdown-item" href="/profile">My profile</a></li>
-          <li><a class="dropdown-item text-danger" href="/logout">Log out</a></li>
+        <?php if(isset($_SESSION['user'])) {
+          echo '<li><a class="dropdown-item" href="/profile">My profile</a></li>';
+          echo '<li><a class="dropdown-item text-danger" href="/logout">Log out</a></li>';
+        } else {
+          echo '<li><a class="dropdown-item" href="/login">Sign in</a></li>';
+          echo '<li><a class="dropdown-item" href="/register">Create an account</a></li>';
+        } 
+        ?>
         </ul>
       </div>
     </div>

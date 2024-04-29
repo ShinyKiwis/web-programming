@@ -2,6 +2,9 @@
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+if(!isset($_SESSION['user'])) {
+  header("Location: " . "http://localhost:8080/home");
+}
 ?>
 <div class="row mt-4 px-5">
   <div class="col-2 d-flex flex-column gap-4" id="profile-actions">
@@ -10,7 +13,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <button><a><i class="fa-solid fa-suitcase"></i><span>My applied jobs</span></a></button>
     <button id="active"><a href="/profile/cv"><i class="fa-solid fa-file"></i><span>My CV</span></a></button>
   </div>
-  <div class="col-10 p-4 h-100" id="profile">
+  <div class="col-10 p-4 h-100 mb-4" id="profile">
     <div class="row" id="profile-header">
       <div class="col-2  d-flex justify-content-center">
         <img 
@@ -42,7 +45,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <input type="hidden" name="user_id" id="user_id" value=<?php echo $_SESSION['user_id'] ?>>
         <button type="submit" class="btn btn-primary ms-auto">Upload CV</button>
       </form>
-      <div id="cv-viewer" class="mt-4" style="height: 50em;"></div>
+      <div id="cv-viewer" class="mt-4" style="height: 40em;"></div>
     </div> 
   </div>
 </div>
