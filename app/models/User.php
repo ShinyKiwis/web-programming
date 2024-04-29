@@ -37,6 +37,8 @@ class User {
     $stmt->bind_param("ssss", $username, $password, $email, $type);
 
     if ($stmt->execute()) {
+      // Get newly created user id
+      // Create emptyCV
       $stmt->close();
       exit(json_encode(array("status" => "success")));
     } else {
@@ -89,6 +91,8 @@ class User {
 
   public static function update($postData) {
     var_dump($postData);
+    // Get user by id
+    // Update CV/User
   }
 }
 ?>
