@@ -86,5 +86,9 @@ class User {
       exit(json_encode(array("status" => "error")));
     }
   }
+
+  public static function update($postData) {
+    var_dump($postData);
+  }
 }
 ?>

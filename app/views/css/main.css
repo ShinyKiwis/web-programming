@@ -162,7 +162,8 @@ form label {
   background-color: var(--white);
   border-radius: 0.4em;
   border: 2px solid #E3E3E3;
-  height: 100vh;
+  height: 90vh;
+  overflow-y: auto;
 }
 
 #profile-header img {

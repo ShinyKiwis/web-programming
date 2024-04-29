@@ -55,6 +55,7 @@ CREATE TABLE `CVs` (
   `highest_degree` VARCHAR(255),
   `current_position` VARCHAR(255),
   `skills` VARCHAR(255),
+  `education` VARCHAR(255),
   `languages` VARCHAR(255),
   `owner_id` integer,
   `willing_to_relocation` boolean,

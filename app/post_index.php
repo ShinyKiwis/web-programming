@@ -10,5 +10,7 @@ if($_POST['action'] == 'login') {
   User::upload_cv($_FILES, $_POST['user_id']);
 } else if($_POST['action'] == 'get_cv'){
   User::get_cv_by_id($_POST);
+} else if($_POST['action'] == 'update_user') {
+  User::update($_POST);
 }
 ?>
