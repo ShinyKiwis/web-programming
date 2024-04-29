@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if(!isset($_SESSION['user'])) {
+if(!isset($_SESSION['user']) && isset($_SESSION['user_id'])) {
   $current_user = User::get_user_by_id($_SESSION['user_id']);
   $_SESSION['user'] = $current_user;
 }

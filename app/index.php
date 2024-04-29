@@ -6,7 +6,7 @@ $routes = [
   "/home" => 'PagesController#home',
   "/profile" => 'TempController#profile',
   "/profile/edit" => 'TempController#edit_profile',
-  "/profile/cv" => "UsersController#upload_cv"
+  "/profile/cv" => "UsersController#upload_cv",
 ];
 
 $url = $_SERVER['REQUEST_URI'];

@@ -68,19 +68,23 @@ class User {
     $filePath = $uploadDirectory . $fileName;
     move_uploaded_file($postData['cv']['tmp_name'], $filePath);
     if (file_exists($filePath)) {
-        header('Content-Type: application/pdf');
-        header('Content-Disposition: inline; filename="' . $fileName . '"');
-        header('Content-Length: ' . filesize($filePath));
-        readfile($filePath);
-        exit;
+        exit(json_encode(array("message" => "Your CV is uploaded successfully.")));
     } else {
         http_response_code(404);
         echo 'File not found.';
     }
   }
   
-  public static function get_cv_by_id($user_id) {
-
+  public static function get_cv_by_id($postData) {
+    $user_id = $postData['user_id'];
+    $cv_path = __DIR__ . "/../data/cvs/{$user_id}.pdf";
+    if (file_exists($cv_path)) {
+      $cv_content = file_get_contents($cv_path);
+      $cv_content_base64 = base64_encode($cv_content);
+      exit(json_encode(array("status" => "success", "cv" => $cv_content_base64))); 
+    } else {
+      exit(json_encode(array("status" => "error")));
+    }
   }
 }
 ?>

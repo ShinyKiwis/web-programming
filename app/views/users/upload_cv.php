@@ -35,13 +35,14 @@ if (session_status() === PHP_SESSION_NONE) {
     </div>
     <div class="profile-section mt-2" id="profile-cv">
       <p>Your CV</p>
+      <p id="upload-result" class="text-success"></p>
       <form id="upload-cv-form">
         <input type="hidden" name="action" value="upload_cv">
         <input type="file" name="cv" id="upload-cv" style="display:none">
         <input type="hidden" name="user_id" id="user_id" value=<?php echo $_SESSION['user_id'] ?>>
         <button type="submit" class="btn btn-primary ms-auto">Upload CV</button>
       </form>
-      <div id="cv-viewer" class="mt-4" style="height: 25em;"></div>
+      <div id="cv-viewer" class="mt-4" style="height: 50em;"></div>
     </div> 
   </div>
 </div>
@@ -61,13 +62,30 @@ $("#upload-cv").on("change", function() {
       data: formData,
       processData: false,
       contentType: false,
+      dataType: "json",
       success: function(response) {
-        console.log(response)
-        const blob = new Blob([response], { type: 'application/pdf' });
-        const url = URL.createObjectURL(blob);
-        PDFObject.embed(url, "#cv-viewer");
+        $("#upload-result").text(response.message);
+        render_cv();
       }
     }) 
   }
 });
+
+function render_cv() {
+  const user_id = "<?php echo $_SESSION['user']['id']; ?>";
+  $.ajax({
+    type: "POST",
+    url: "/post_index.php",
+    data: {"user_id": user_id, "action": "get_cv"},
+    success: function(response) {
+      const data = JSON.parse(response);
+      if(data.status === "success") {
+        PDFObject.embed("data:application/pdf;base64," + data.cv, "#cv-viewer");
+      }
+    }
+  })
+}
+
+render_cv();
+
 </script>
