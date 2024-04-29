@@ -8,5 +8,12 @@ class UsersController {
     $content = ob_get_clean();
     return $content;
   }
+
+  public function upload_cv() {
+    ob_start();
+    include(self::DEFAULT_VIEW_FOLDER . 'upload_cv.php');
+    $content = ob_get_clean();
+    return $content;
+  }
 }
 ?>

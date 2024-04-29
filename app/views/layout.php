@@ -1,3 +1,15 @@
+<?php
+require_once 'models/User.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if(!isset($_SESSION['user']) && isset($_SESSION['user_id'])) {
+  $current_user = User::get_user_by_id($_SESSION['user_id']);
+  $_SESSION['user'] = $current_user;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,13 +26,13 @@
     <?php
       $current_path = $_SERVER['REQUEST_URI']; 
       $excludeHeaderPaths = array("/login", "/register");
-      $excludeSearchBarPaths = array("/profile", "/profile/edit");
+      $excludeSearchBarPaths = array("/profile", "/profile/edit", "/profile/cv");
       if (!in_array($current_path, $excludeHeaderPaths)) {
         include('components/header.php');
       }
     ?>
   </header>
-  <main style="overflow: auto; height: 100vh;">
+  <main class="overflow-auto overflow-x-hidden" style="height: 100vh;">
     <?php
       if (!in_array($current_path, $excludeSearchBarPaths) && !in_array($current_path, $excludeHeaderPaths)) {
         include ('components/search_bar.php');
@@ -35,5 +47,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
   <script src="https://kit.fontawesome.com/9255a9b9ab.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdfobject"></script>
 </body>
 </html>
