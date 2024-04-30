@@ -26,7 +26,7 @@ if(!isset($_SESSION['user']) && isset($_SESSION['user_id'])) {
     <?php
       $current_path = $_SERVER['REQUEST_URI']; 
       $excludeHeaderPaths = array("/login", "/register");
-      $excludeSearchBarPaths = array("/profile", "/profile/edit", "/profile/cv");
+      $excludeSearchBarPaths = array("/profile", "/profile/edit", "/profile/cv", "/company/profile", "/company/edit");
       if (!in_array($current_path, $excludeHeaderPaths)) {
         include('components/header.php');
       }
