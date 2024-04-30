@@ -87,31 +87,57 @@ if(!isset($_SESSION['user'])) {
     </div>
 </div>
 <script>
-$('#addSkillIcon').click(function(event){
-  event.preventDefault();
-  var skill = $('#skillInput').val().trim();
-  if(skill !== '') {
-    $('#skillList').append('<li class="d-flex align-items-center mt-2" style="width: 15em;">' + skill + ' <button class="deleteSkillBtn btn btn-danger ms-auto">Delete</button></li>');
-    $('#skillInput').val('');
-  }
+$(document).ready(function() {
+    $('#addSkillIcon').click(function(event) {
+        event.preventDefault();
+        var skill = $('#skillInput').val().trim();
+        if (skill !== '') {
+            $('#skillList').append('<li class="d-flex align-items-center mt-2" style="width: 15em;">' + skill + ' <button class="deleteSkillBtn btn btn-danger ms-auto">Delete</button></li>');
+            $('#skillInput').val('');
+        }
+    });
+    $(document).on('click', '.deleteSkillBtn', function() {
+        $(this).parent().remove();
+    });
+    $('#update-form').submit(function(event) {
+        var skills = [];
+        $('#skillList li').each(function() {
+            var skill = $(this).text().trim().split(' ')[0];
+            skills.push(skill);
+        });
+        var hiddenInput = $('<input>').attr({
+            type: 'hidden',
+            name: 'skills',
+            value: skills.join(',')
+        });
+        $(this).append(hiddenInput);
+    });
 });
-
-$(document).on('click', '.deleteSkillBtn', function(){
-  $(this).parent().remove();
-});
-
-$(document).ready(function(){
-  $('#addLanguageIcon').click(function(){
-    var language = $('#languageInput').val().trim();
-    if(language !== '') {
-      $('#languageList').append('<li class="d-flex align-items-center mt-2" style="width: 15em;">' + language + ' <button class="deleteLanguageBtn btn btn-danger ms-auto">Delete</button></li>');
-      $('#languageInput').val('');
-    }
-  });
-
-  $(document).on('click', '.deleteLanguageBtn', function(){
-      $(this).parent().remove();
-  });
+$(document).ready(function() {
+    $('#addLanguageIcon').click(function(event) {
+        event.preventDefault();
+        var language = $('#languageInput').val().trim();
+        if (language !== '') {
+            $('#languageList').append('<li class="d-flex align-items-center mt-2" style="width: 15em;">' + language + ' <button class="deleteLanguageBtn btn btn-danger ms-auto">Delete</button></li>');
+            $('#languageInput').val('');
+        }
+    });
+    $(document).on('click', '.deleteLanguageBtn', function() {
+        $(this).parent().remove();
+    });
+    $('#update-form').submit(function(event) {
+        var languages = [];
+        $('#languageList li').each(function() {
+            var language = $(this).text().trim().split(' ')[0];
+            languages.push(language);
+        });
+        var hiddenInput = $('<input>').attr({
+            type: 'hidden',
+            name: 'languages',
+            value: languages.join(',')
+        });
+        $(this).append(hiddenInput);
+    });
 });
 $(document).ready(function(){
   $('#uploadImage').change(function(){
@@ -154,5 +180,6 @@ $(document).ready(function(){
 $('#uploadLink').click(function(e){
     e.preventDefault();
     $('#uploadImage').click();
+});
 });
 </script>
