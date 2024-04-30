@@ -108,7 +108,7 @@ $(document).ready(function() {
         var hiddenInput = $('<input>').attr({
             type: 'hidden',
             name: 'skills',
-            value: skills.join(',')
+            value: skills.join('@')
         });
         $(this).append(hiddenInput);
     });
@@ -134,7 +134,7 @@ $(document).ready(function() {
         var hiddenInput = $('<input>').attr({
             type: 'hidden',
             name: 'languages',
-            value: languages.join(',')
+            value: languages.join('@')
         });
         $(this).append(hiddenInput);
     });

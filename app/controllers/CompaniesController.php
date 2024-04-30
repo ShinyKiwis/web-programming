@@ -1,14 +1,15 @@
 <?php
-class TempController {
-  const DEFAULT_VIEW_FOLDER = 'views/temp/';
-  public function profile() {
+class CompaniesController {
+  const DEFAULT_VIEW_FOLDER = 'views/companies/';
+
+  public function show() {
     ob_start();
     include(self::DEFAULT_VIEW_FOLDER . 'profile.php');
     $content = ob_get_clean();
     return $content;
   }
 
-  public function edit_profile() {
+  public function edit() {
     ob_start();
     include(self::DEFAULT_VIEW_FOLDER . 'edit_profile.php');
     $content = ob_get_clean();

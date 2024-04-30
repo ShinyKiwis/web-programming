@@ -4,9 +4,11 @@ $routes = [
   "/login" => 'SessionsController#new',
   "/logout" => 'SessionsController#destroy',
   "/home" => 'PagesController#home',
-  "/profile" => 'TempController#profile',
-  "/profile/edit" => 'TempController#edit_profile',
+  "/profile" => 'ProfilesController#show',
+  "/profile/edit" => 'ProfilesController#edit',
   "/profile/cv" => "UsersController#upload_cv",
+  "/company/profile" => 'CompaniesController#show',
+  "/company/profile/edit" => 'CompaniesController#edit'
 ];
 
 $url = $_SERVER['REQUEST_URI'];
