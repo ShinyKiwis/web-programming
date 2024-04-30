@@ -33,10 +33,23 @@ if(!isset($_SESSION['user'])) {
             <div class="col-3">
               <p><i class="fa-solid fa-suitcase"></i><input type="text" class="form-control" name="current_position" value="" placeholder="Your current position"></p>
               <p><i class="fa-solid fa-envelope"></i><?php echo $_SESSION['user']['email'] ?></p>
-              <p><i class="fa-solid fa-house"></i><input type="text" class="form-control" placeholder="Edit to add your address"></p>
             </div>
             <div class="col-4">
-              <p><i class="fa-solid fa-user-graduate"></i><input type="text" class="form-control" name="highest_degree" placeholder="Edit to add your highest degree"></p>
+              <p><i class="fa-solid fa-user-graduate"></i>          
+              <select class="col-2 selectpicker" name="willing_to_relocation" title="Your highest degree" data-allow-clear="true">
+                <option value="high-school">High school</option>
+                <option value="college">College</option>
+                <option value="bachelor">Bachelors</option>
+                <option value="master">Masters</option>
+                <option value="doctorate">Doctorate</option>
+                <option value="higher">Higher</option>
+              </select>            
+            </div>
+            <div class="row d-flex align-items-center">
+              <p class="col-3 mb-0"><i class="fa-solid fa-house"></i><input type="text" class="form-control" placeholder="Your address" /></p>
+              <select class="selectpicker" name="address_city" title="City" data-allow-clear id="city-picker" data-live-search="true" data-width="fit"></select>
+              <select class="selectpicker" name="address_district" title="District" data-allow-clear id="district-picker" data-live-search="true" data-width="fit" disabled></select>
+              <select class="selectpicker" name="address_ward" title="Ward" data-allow-clear id="ward-picker" data-live-search="true" data-width="fit" disabled></select>
             </div>
           </div>
         </div>
@@ -50,6 +63,13 @@ if(!isset($_SESSION['user'])) {
         <div class="row">
           <p class="col-2">Expected Salary</p>
           <div class="col-2"><input type="text" class="form-control" name="desired_job_salary"  placeholder="Your expected salary"></div>
+        </div>
+        <div class="row">
+          <p class="col-2">Willing to relocation</p>
+          <select class="col-2 selectpicker" name="willing_to_relocation" title="Relocation ?" data-allow-clear="true">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
         </div>
       </div> 
       <div class="profile-section" id="career-goals">
@@ -66,8 +86,8 @@ if(!isset($_SESSION['user'])) {
       </div> 
       <div class="profile-section" id="skills">
         <p>Skills</p>
-        <div>
-          <input type="text" id="skillInput" placeholder="Enter a skill">
+        <div class="d-flex align-items-center">
+          <input type="text" class="form-control" style="width: 25%; margin-bottom: 0px;"  id="skillInput" placeholder="Enter a skill">
           <button id="addSkillIcon" class="btn btn-primary ms-2">Add skill</button>
         </div>
         <ul id="skillList">
@@ -75,9 +95,9 @@ if(!isset($_SESSION['user'])) {
       </div> 
       <div class="profile-section" id="languages">
         <p>Languages</p>
-        <div>
-          <input type="text" id="languageInput" placeholder="Enter a language">
-        <button id="addLanguageIcon" class="btn btn-primary ms-2">Add language</button>
+        <div class="d-flex align-items-center">
+          <input type="text" class="form-control" style="width: 25%; margin-bottom: 0px;" id="languageInput" placeholder="Enter a language">
+          <button id="addLanguageIcon" class="btn btn-primary ms-2">Add language</button>
         </div>
         <ul id="languageList">
         </ul>
@@ -182,4 +202,77 @@ $('#uploadLink').click(function(e){
     $('#uploadImage').click();
 });
 });
+let cities = []
+$(document).ready(function () {
+  $.ajax({
+    url: "http://localhost:8080/data/address.json",
+    method: "GET",
+    dataType: "json",
+    success: function(data) {
+      cities = Object.values(data);
+      const citiesOptions = cities.map(city => ({
+        value: city.slug,
+        option: city.name_with_type
+      }))
+      $.each(citiesOptions, function(_, item) {
+        $("#city-picker").append($('<option>', {
+          value: item.value,
+          text: item.option
+        }))
+      }) 
+      $('#city-picker').selectpicker('refresh');
+    }
+  })
+})
+
+$("#city-picker").on("change", function() {
+  const selectedCity = cities.filter(city => city.slug == $(this).val())[0];
+  // Clear options value
+  $("#district-picker").find('option').remove();
+  $("#district-picker").selectpicker("destroy");
+  $("#district-picker").selectpicker();
+
+  $("#ward-picker").find('option').remove();
+  $("#ward-picker").selectpicker("destroy");
+  $("#ward-picker").selectpicker();
+
+  // Set new data
+  $("#district-picker").prop("disabled", false);
+  const districtsOptions = selectedCity.quan_huyen.map(district => ({
+    value: district.slug,
+    option: district.name_with_type
+  }))
+  $.each(districtsOptions, function(_, item) {
+    $("#district-picker").append($('<option>', {
+      value: item.value,
+      text: item.option
+    }))
+  }) 
+  $("#district-picker").selectpicker("refresh");
+})
+
+$("#district-picker").on("change", function() {
+  const selectedDistrict = cities.
+    filter(city => city.slug == $("#city-picker").val())[0].quan_huyen.
+    filter(district => district.slug == $(this).val())[0];
+  // Clear options value
+  $("#ward-picker").find('option').remove();
+  $("#ward-picker").selectpicker("destroy");
+  $("#ward-picker").selectpicker();
+
+  // Set new data
+  $("#ward-picker").prop("disabled", false);
+  console.log(selectedDistrict)
+  const wardsOptions = selectedDistrict.xa_phuong.map(ward => ({
+    value: ward.slug,
+    option: ward.name_with_type
+  }))
+  $.each(wardsOptions, function(_, item) {
+    $("#ward-picker").append($('<option>', {
+      value: item.value,
+      text: item.option
+    }))
+  }) 
+  $("#ward-picker").selectpicker("refresh");
+})
 </script>

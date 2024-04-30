@@ -26,7 +26,7 @@ if(!isset($_SESSION['user'])) {
         <p class="fs-4 fw-medium"><?php echo $_SESSION['user']['username']?></p>
         <div class="row">
           <div class="col-4">
-            <p><i class="fa-solid fa-suitcase"></i><span>Junior Backend Engineer</span></p>
+            <p><i class="fa-solid fa-suitcase"></i><span>Edit to add your current position</span></p>
             <p><i class="fa-solid fa-envelope"></i><span><?php echo $_SESSION['user']['email'] ?></span></p>
             <p><i class="fa-solid fa-house"></i><span class="prompt">Edit to add your address</span></p>
           </div>
@@ -45,6 +45,10 @@ if(!isset($_SESSION['user'])) {
       <div class="row">
         <p class="col-2">Expected Salary</p>
         <p class="col-2 prompt">Edit to add expected salary</p>
+      </div>
+      <div class="row">
+        <p class="col-2">Willing to relocation</p>
+        <p class="col-2 prompt">Edit to add your decision</p>
       </div>
     </div> 
     <div class="profile-section" id="career-goals">

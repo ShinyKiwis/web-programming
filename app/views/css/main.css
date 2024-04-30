@@ -195,3 +195,12 @@ form label {
   text-decoration: none;
   color: var(--blue) !important;
 }
+
+.dropdown-toggle {
+  background-color: var(--white) !important;
+  border: 1px solid #dee2e6 !important;
+}
+
+.filter-option-inner-inner {
+  color: var(--black) !important;
+}
