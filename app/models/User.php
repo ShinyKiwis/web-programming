@@ -1,5 +1,6 @@
 <?php 
 require_once "database.php";
+require_once "CV.php";
 class User {
   public static function get_user_by_email($email) {
     $conn = Database::getInstance()->getConnection();
@@ -38,7 +39,9 @@ class User {
 
     if ($stmt->execute()) {
       // Get newly created user id
+      $user_id = $conn->insert_id;
       // Create emptyCV
+      CV::create($user_id);
       $stmt->close();
       exit(json_encode(array("status" => "success")));
     } else {
@@ -91,7 +94,7 @@ class User {
 
   public static function update($postData) {
     var_dump($postData);
-    // Get user by id
+    // Get CV by id
     // Update CV/User
   }
 }

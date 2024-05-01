@@ -15,6 +15,7 @@ if(!isset($_SESSION['user'])) {
   </div>
     <div class="col-10 p-4" id="profile">
     <form id="update-form" action="/post_index.php" method="POST">
+      <input type="hidden" name="user_id" id="user_id" value=<?php echo $_SESSION['user_id'] ?>>
       <input type="hidden" name="action" value="update_user">
       <div class="row" id="profile-header">
         <div class="col-2  d-flex justify-content-center">
@@ -28,10 +29,10 @@ if(!isset($_SESSION['user'])) {
           <input type="file" id="uploadImage" style="display:none" accept="image/*">
         </div>
         <div class="col-10">
-          <p class="fs-4 fw-medium"><input type="text" class="form-control" value="<?php echo $_SESSION['user']['username'] ?>" placeholder="Your username"></p>
+          <p class="fs-4 fw-medium"><input type="text" class="form-control" value="<?php echo $_SESSION['user']['username'] ?>" placeholder="Your username" required /></p>
           <div class="row">
             <div class="col-3">
-              <p><i class="fa-solid fa-suitcase"></i><input type="text" class="form-control" name="current_position" value="" placeholder="Your current position"></p>
+              <p><i class="fa-solid fa-suitcase"></i><input type="text" class="form-control" name="current_position" value="" placeholder="Your current position" required /></p>
               <p><i class="fa-solid fa-envelope"></i><?php echo $_SESSION['user']['email'] ?></p>
             </div>
             <div class="col-4">
@@ -46,10 +47,10 @@ if(!isset($_SESSION['user'])) {
               </select>            
             </div>
             <div class="row d-flex align-items-center">
-              <p class="col-3 mb-0"><i class="fa-solid fa-house"></i><input type="text" class="form-control" placeholder="Your address" /></p>
-              <select class="selectpicker" name="address_city" title="City" data-allow-clear id="city-picker" data-live-search="true" data-width="fit"></select>
-              <select class="selectpicker" name="address_district" title="District" data-allow-clear id="district-picker" data-live-search="true" data-width="fit" disabled></select>
-              <select class="selectpicker" name="address_ward" title="Ward" data-allow-clear id="ward-picker" data-live-search="true" data-width="fit" disabled></select>
+              <p class="col-3 mb-0"><i class="fa-solid fa-house"></i><input type="text" class="form-control" placeholder="Your address" required /></p>
+              <select class="selectpicker" name="address_city" title="City" data-allow-clear id="city-picker" data-live-search="true" data-width="fit" required></select>
+              <select class="selectpicker" name="address_district" title="District" data-allow-clear id="district-picker" data-live-search="true" data-width="fit" disabled required></select>
+              <select class="selectpicker" name="address_ward" title="Ward" data-allow-clear id="ward-picker" data-live-search="true" data-width="fit" disabled required></select>
             </div>
           </div>
         </div>
@@ -58,15 +59,17 @@ if(!isset($_SESSION['user'])) {
         <p>Desired Job</p>
         <div class="row">
           <p class="col-2">Location</p>
-          <p class="col-2"><input type="text" class="form-control" name="desired_job_location" placeholder="Your location"></p>
+          <p class="col-2">
+            <select class="selectpicker" name="desired_job_location" title="Location" data-allow-clear id="location-picker" data-live-search="true" data-width="fit" required></select>
+          </p>
         </div>
         <div class="row">
           <p class="col-2">Expected Salary</p>
-          <div class="col-2"><input type="text" class="form-control" name="desired_job_salary"  placeholder="Your expected salary"></div>
+          <div class="col-2"><input type="text" class="form-control" name="desired_job_salary" placeholder="Your expected salary" required /></div>
         </div>
         <div class="row">
           <p class="col-2">Willing to relocation</p>
-          <select class="col-2 selectpicker" name="willing_to_relocation" title="Relocation ?" data-allow-clear="true">
+          <select class="col-2 selectpicker" name="willing_to_relocation" title="Relocation ?" data-allow-clear="true" required />
             <option value="true">Yes</option>
             <option value="false">No</option>
           </select>
@@ -74,20 +77,20 @@ if(!isset($_SESSION['user'])) {
       </div> 
       <div class="profile-section" id="career-goals">
         <p>Career Goals</p>
-        <textarea type="text" class="form-control" name="career_goal" placeholder="Your career goals" style="height: 100px"></textarea>
+        <textarea type="text" class="form-control" name="career_goal" placeholder="Your career goals" style="height: 100px" required></textarea>
       </div> 
       <div class="profile-section" id="experiences">
         <p>Experiences</p>
-        <textarea type="text" class="form-control" name="experiences" placeholder="Your experiences" style="height: 100px"></textarea>    
+        <textarea type="text" class="form-control" name="experiences" placeholder="Your experiences" style="height: 100px" required></textarea>    
       </div> 
       <div class="profile-section" id="education">
         <p>Education</p>
-        <textarea type="text" class="form-control" name="education" placeholder="Your education" style="height: 100px"></textarea>
+        <textarea type="text" class="form-control" name="education" placeholder="Your education" style="height: 100px" required></textarea>
       </div> 
       <div class="profile-section" id="skills">
         <p>Skills</p>
         <div class="d-flex align-items-center">
-          <input type="text" class="form-control" style="width: 25%; margin-bottom: 0px;"  id="skillInput" placeholder="Enter a skill">
+          <input type="text" class="form-control" style="width: 25%; margin-bottom: 0px;"  id="skillInput" placeholder="Enter a skill"/>
           <button id="addSkillIcon" class="btn btn-primary ms-2">Add skill</button>
         </div>
         <ul id="skillList">
@@ -215,12 +218,17 @@ $(document).ready(function () {
         option: city.name_with_type
       }))
       $.each(citiesOptions, function(_, item) {
+        $("#location-picker").append($('<option>', {
+          value: item.value,
+          text: item.option
+        }))
         $("#city-picker").append($('<option>', {
           value: item.value,
           text: item.option
         }))
       }) 
       $('#city-picker').selectpicker('refresh');
+      $('#location-picker').selectpicker('refresh');
     }
   })
 })

@@ -26,7 +26,7 @@ if(!isset($_SESSION['user'])) {
         <p class="fs-4 fw-medium"><?php echo $_SESSION['user']['username']?></p>
         <div class="row">
           <div class="col-4">
-            <p><i class="fa-solid fa-suitcase"></i><span>Edit to add your current position</span></p>
+            <p><i class="fa-solid fa-suitcase"></i><span class="prompt">Edit to add your current position</span></p>
             <p><i class="fa-solid fa-envelope"></i><span><?php echo $_SESSION['user']['email'] ?></span></p>
             <p><i class="fa-solid fa-house"></i><span class="prompt">Edit to add your address</span></p>
           </div>

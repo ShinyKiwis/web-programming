@@ -71,9 +71,11 @@ $("#register-form").on("submit", function(event) {
     data: $(this).serialize(),
     dataType: "json",
     success: function(response) {
+      console.log(response);
       if (response.status == "error") {
         $("#register-error").text(response.message);
       } else {
+        console.log("HERE");
         window.location.href = "http://localhost:8080/welcome";
       }
     }
