@@ -29,7 +29,7 @@ if(!isset($_SESSION['user'])) {
           <input type="file" id="uploadImage" style="display:none" accept="image/*">
         </div>
         <div class="col-10">
-          <p class="fs-4 fw-medium"><input type="text" class="form-control" value="<?php echo $_SESSION['user']['username'] ?>" placeholder="Your username" required /></p>
+          <p class="fs-4 fw-medium"><?php echo $_SESSION['user']['username'] ?></p>
           <div class="row">
             <div class="col-3">
               <p><i class="fa-solid fa-suitcase"></i><input type="text" class="form-control" name="current_position" value="<?php echo $_SESSION['user']['cv']['current_position'] ?>" 
@@ -39,12 +39,12 @@ if(!isset($_SESSION['user'])) {
             <div class="col-4">
               <p><i class="fa-solid fa-user-graduate"></i>          
               <select class="col-2 selectpicker" name="highest_degree" title="Your highest degree" data-allow-clear="true">
-                <option value="High School">High school</option>
-                <option value="College">College</option>
-                <option value="Bachelors">Bachelors</option>
-                <option value="Masters">Masters</option>
-                <option value="Doctorate">Doctorate</option>
-                <option value="Higher">Higher</option>
+                <option value="High School" <?php echo $_SESSION['user']['cv']['highest_degree'] == 'High School' ? 'selected' : '' ?>>High school</option>
+                <option value="College" <?php echo $_SESSION['user']['cv']['highest_degree'] == 'College' ? 'selected' : '' ?>>College</option>
+                <option value="Bachelors" <?php echo $_SESSION['user']['cv']['highest_degree'] == 'Bachelors' ? 'selected' : '' ?>>Bachelors</option>
+                <option value="Masters" <?php echo $_SESSION['user']['cv']['highest_degree'] == 'Masters' ? 'selected' : '' ?>>Masters</option>
+                <option value="Doctorate" <?php echo $_SESSION['user']['cv']['highest_degree'] == 'Doctorate' ? 'selected' : '' ?>>Doctorate</option>
+                <option value="Higher" <?php echo $_SESSION['user']['cv']['highest_degree'] == 'Higher' ? 'selected' : '' ?>>Higher</option>
               </select>            
             </div>
             <div class="row d-flex align-items-center">
@@ -73,8 +73,8 @@ if(!isset($_SESSION['user'])) {
         <div class="row">
           <p class="col-2">Willing to relocation</p>
           <select class="col-2 selectpicker" name="willing_to_relocation" title="Relocation ?" data-allow-clear="true" required />
-            <option value="true">Yes</option>
-            <option value="false">No</option>
+            <option value="true" <?php echo $_SESSION['user']['cv']['willing_to_relocation'] == "1" ? 'selected' : '' ?>>Yes</option>
+            <option value="false" <?php echo $_SESSION['user']['cv']['willing_to_relocation'] == "0" ? 'selected' : '' ?>>No</option>
           </select>
         </div>
       </div> 
@@ -113,6 +113,18 @@ if(!isset($_SESSION['user'])) {
     </div>
 </div>
 <script>
+// Populate skills and languages
+const skills = `<?php echo $_SESSION['user']['cv']['skills']; ?>`;
+const languages = `<?php echo $_SESSION['user']['cv']['languages']; ?>`;
+
+skills.split("@").forEach(skill => {
+  $('#skillList').append('<li class="d-flex align-items-center mt-2" style="width: 15em;">' + skill + ' <button class="deleteSkillBtn btn btn-danger ms-auto">Delete</button></li>');
+})
+
+languages.split("@").forEach(language => {
+  $('#languageList').append('<li class="d-flex align-items-center mt-2" style="width: 15em;">' + language + ' <button class="deleteLanguageBtn btn btn-danger ms-auto">Delete</button></li>');
+})
+
 $(document).ready(function() {
     $('#addSkillIcon').click(function(event) {
         event.preventDefault();
@@ -209,6 +221,9 @@ $('#uploadLink').click(function(e){
 });
 });
 let cities = []
+const selectedCity = `<?php echo $_SESSION['user']['address']['city']; ?>`;
+const selectedDistrict = `<?php echo $_SESSION['user']['address']['district']; ?>`;
+const selectedWard = `<?php echo $_SESSION['user']['address']['ward']; ?>`;
 $(document).ready(function () {
   $.ajax({
     url: "http://localhost:8080/data/address.json",
@@ -223,15 +238,23 @@ $(document).ready(function () {
       $.each(citiesOptions, function(_, item) {
         $("#location-picker").append($('<option>', {
           value: item.value,
-          text: item.option
+          text: item.option,
+          selected: item.value === selectedCity
         }))
         $("#city-picker").append($('<option>', {
           value: item.value,
-          text: item.option
+          text: item.option,
+          selected: item.value === selectedCity
         }))
       }) 
       $('#city-picker').selectpicker('refresh');
       $('#location-picker').selectpicker('refresh');
+      if(selectedDistrict) {
+        populateDistrict(selectedCity);
+        if(selectedWard) {
+          populateWard(selectedDistrict)
+        }
+      }
     }
   })
 })
@@ -286,4 +309,58 @@ $("#district-picker").on("change", function() {
   }) 
   $("#ward-picker").selectpicker("refresh");
 })
+
+function populateDistrict(selectedCity) {
+ const selectedCityValue = cities.filter(city => city.slug == selectedCity)[0];
+  // Clear options value
+  $("#district-picker").find('option').remove();
+  $("#district-picker").selectpicker("destroy");
+  $("#district-picker").selectpicker();
+
+  $("#ward-picker").find('option').remove();
+  $("#ward-picker").selectpicker("destroy");
+  $("#ward-picker").selectpicker();
+
+  // Set new data
+  $("#district-picker").prop("disabled", false);
+  const districtsOptions = selectedCityValue.quan_huyen.map(district => ({
+    value: district.slug,
+    option: district.name_with_type
+  }))
+  $.each(districtsOptions, function(_, item) {
+    $("#district-picker").append($('<option>', {
+      value: item.value,
+      text: item.option,
+      selected: item.value == selectedDistrict
+    }))
+  }) 
+  $("#district-picker").selectpicker("refresh");
+}
+
+function populateWard(selectedDistrict) {
+  const selectedDistrictValue = cities
+    .filter(city => city.slug == $("#city-picker").val())[0].quan_huyen
+    .filter(district => district.slug == selectedDistrict)[0];
+
+  // Clear options value
+  $("#ward-picker").find('option').remove();
+  $("#ward-picker").selectpicker("destroy");
+  $("#ward-picker").selectpicker();
+
+  // Set new data
+  $("#ward-picker").prop("disabled", false);
+  const wardsOptions = selectedDistrictValue.xa_phuong.map(ward => ({
+    value: ward.slug,
+    option: ward.name_with_type
+  }));
+  $.each(wardsOptions, function(_, item) {
+    $("#ward-picker").append($('<option>', {
+      value: item.value,
+      text: item.option,
+      selected: item.value == selectedWard
+    }));
+  }); 
+  $("#ward-picker").selectpicker("refresh");
+}
+
 </script>

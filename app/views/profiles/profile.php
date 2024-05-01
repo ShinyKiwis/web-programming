@@ -34,7 +34,7 @@ if(!isset($_SESSION['user'])) {
               }?>
             </p>
             <p><i class="fa-solid fa-envelope"></i><span><?php echo $_SESSION['user']['email'] ?></span></p>
-            <p><i class="fa-solid fa-house"></i><span class="prompt">Edit to add your address</span></p>
+            <p><i class="fa-solid fa-house"></i><span class="prompt" id="user_address">Edit to add your address</span></p>
           </div>
           <div class="col-4">
             <p><i class="fa-solid fa-user-graduate"></i>
@@ -52,7 +52,7 @@ if(!isset($_SESSION['user'])) {
       <p>Desired Job</p>
       <div class="row">
         <p class="col-2">Location</p>
-        <p class="col-2 prompt">Edit to add location</p>
+        <p class="col-2 prompt" id="desired_job_location">Edit to add location</p>
       </div>
       <div class="row">
         <p class="col-2">Expected Salary</p>
@@ -108,11 +108,83 @@ if(!isset($_SESSION['user'])) {
     </div> 
     <div class="profile-section" id="skills">
       <p>Skills</p>
+      <ul id="skillList">
+      </ul>
       <p class="prompt">Edit to add skills</p>
     </div> 
     <div class="profile-section" id="languages">
       <p>Languages</p>
+      <ul id="languageList">
+      </ul>
       <p class="prompt">Edit to add languages</p>
     </div> 
   </div>
 </div>
+<script>
+const selectedAddress = `<?php echo $_SESSION['user']['address']['address']; ?>`;
+const selectedCity = `<?php echo $_SESSION['user']['address']['city']; ?>`;
+const selectedDistrict = `<?php echo $_SESSION['user']['address']['district']; ?>`;
+const selectedWard = `<?php echo $_SESSION['user']['address']['ward']; ?>`;
+const desiredLocation = `<?php echo $_SESSION['user']['cv']['desired_job_location']; ?>`;
+
+
+// Handle skills and languages
+const skills = `<?php echo $_SESSION['user']['cv']['skills']; ?>`;
+const languages = `<?php echo $_SESSION['user']['cv']['languages']; ?>`;
+if(skills.split("@").length > 0) {
+  $("#skills .prompt").remove();
+}
+
+if(languages.split("@").length > 0) {
+  $("#languages .prompt").remove();
+}
+
+skills.split("@").forEach(skill => {
+  $('#skillList').append('<li class="d-flex align-items-center mt-2" style="width: 15em;">' + skill + '</li>');
+})
+
+languages.split("@").forEach(language => {
+  $('#languageList').append('<li class="d-flex align-items-center mt-2" style="width: 15em;">' + language + '</li>');
+})
+
+
+$.ajax({
+  url: "http://localhost:8080/data/address.json",
+  method: "GET",
+  dataType: "json",
+  success: function(data) {
+    const cities = Object.values(data);
+    console.log(cities);
+    let address = "";
+    let selectedCityValue = "";
+    let selectedDistrictValue = "";
+    let selectedWardValue = "";
+    cities.forEach(city => {
+      if(city.slug == selectedCity) {
+        selectedCityValue = city.name_with_type;
+        city.quan_huyen.forEach(district => {
+          if(district.slug == selectedDistrict) {
+            selectedDistrictValue = district.name_with_type;
+            district.xa_phuong.forEach(ward => {
+              if(ward.slug == selectedWard) {
+                selectedWardValue = ward.name_with_type;
+              }
+            })
+          }
+        })
+      }
+    })
+    if(selectedWardValue && selectedCityValue && selectedDistrictValue) {
+      $("#user_address").removeClass("prompt");
+      $("#user_address").text([selectedAddress, selectedWardValue, selectedDistrictValue, selectedCityValue].join(", "))
+    }
+
+    cities.forEach(city => {
+      if(city.slug == desiredLocation) {
+        $("#desired_job_location").removeClass("prompt");
+        $("#desired_job_location").text(city.name_with_type);
+      }
+    })
+  }
+})
+</script>

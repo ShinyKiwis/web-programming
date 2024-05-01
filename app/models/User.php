@@ -119,6 +119,8 @@ class User {
     $willingToRelocation = ($postData['willing_to_relocation'] === 'false') ? 0 : 1;
     $desiredJobLocation = $postData['desired_job_location'];
     $desiredJobSalary = $postData['desired_job_salary'];
+    $skills = $postData['skills'];
+    $languages = $postData['languages'];
 
     // Construct the SQL query to update the CV
     $sql = "UPDATE CVs SET 
@@ -129,14 +131,16 @@ class User {
                 education = ?, 
                 willing_to_relocation = ?, 
                 desired_job_location = ?, 
-                desired_job_salary = ? 
+                desired_job_salary = ?,
+                skills = ?,
+                languages = ?
             WHERE owner_id = ?";
 
     // Prepare the statement
     $stmt = $conn->prepare($sql);
 
     // Bind parameters
-    $stmt->bind_param("ssssssssi", 
+    $stmt->bind_param("ssssssssssi", 
                       $careerGoal, 
                       $experiences, 
                       $highestDegree, 
@@ -144,9 +148,13 @@ class User {
                       $education, 
                       $willingToRelocation, 
                       $desiredJobLocation, 
-                      $desiredJobSalary, 
+                      $desiredJobSalary,
+                      $skills,
+                      $languages,
                       $user_id);
     if($stmt->execute()) {
+      session_start();
+      $_SESSION['user'] = self::get_user_by_id($user_id);
       header("Location: " . "http://localhost:8080/profile");
     } else {
       echo "Error: " . $stmt->error;
