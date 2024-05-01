@@ -32,22 +32,25 @@ if(!isset($_SESSION['user'])) {
           <p class="fs-4 fw-medium"><input type="text" class="form-control" value="<?php echo $_SESSION['user']['username'] ?>" placeholder="Your username" required /></p>
           <div class="row">
             <div class="col-3">
-              <p><i class="fa-solid fa-suitcase"></i><input type="text" class="form-control" name="current_position" value="" placeholder="Your current position" required /></p>
+              <p><i class="fa-solid fa-suitcase"></i><input type="text" class="form-control" name="current_position" value="<?php echo $_SESSION['user']['cv']['current_position'] ?>" 
+                placeholder="Your current position" required /></p>
               <p><i class="fa-solid fa-envelope"></i><?php echo $_SESSION['user']['email'] ?></p>
             </div>
             <div class="col-4">
               <p><i class="fa-solid fa-user-graduate"></i>          
-              <select class="col-2 selectpicker" name="willing_to_relocation" title="Your highest degree" data-allow-clear="true">
-                <option value="high-school">High school</option>
-                <option value="college">College</option>
-                <option value="bachelor">Bachelors</option>
-                <option value="master">Masters</option>
-                <option value="doctorate">Doctorate</option>
-                <option value="higher">Higher</option>
+              <select class="col-2 selectpicker" name="highest_degree" title="Your highest degree" data-allow-clear="true">
+                <option value="High School">High school</option>
+                <option value="College">College</option>
+                <option value="Bachelors">Bachelors</option>
+                <option value="Masters">Masters</option>
+                <option value="Doctorate">Doctorate</option>
+                <option value="Higher">Higher</option>
               </select>            
             </div>
             <div class="row d-flex align-items-center">
-              <p class="col-3 mb-0"><i class="fa-solid fa-house"></i><input type="text" class="form-control" placeholder="Your address" required /></p>
+              <p class="col-3 mb-0"><i class="fa-solid fa-house"></i>
+                <input type="text" class="form-control" value="<?php echo $_SESSION['user']['address']['address'] ?>" name="address_address" placeholder="Your address" required />
+              </p>
               <select class="selectpicker" name="address_city" title="City" data-allow-clear id="city-picker" data-live-search="true" data-width="fit" required></select>
               <select class="selectpicker" name="address_district" title="District" data-allow-clear id="district-picker" data-live-search="true" data-width="fit" disabled required></select>
               <select class="selectpicker" name="address_ward" title="Ward" data-allow-clear id="ward-picker" data-live-search="true" data-width="fit" disabled required></select>
@@ -65,7 +68,7 @@ if(!isset($_SESSION['user'])) {
         </div>
         <div class="row">
           <p class="col-2">Expected Salary</p>
-          <div class="col-2"><input type="text" class="form-control" name="desired_job_salary" placeholder="Your expected salary" required /></div>
+          <div class="col-2"><input type="text" class="form-control" value="<?php echo $_SESSION['user']['cv']['desired_job_salary'] ?>" name="desired_job_salary" placeholder="Your expected salary" required /></div>
         </div>
         <div class="row">
           <p class="col-2">Willing to relocation</p>
@@ -77,15 +80,15 @@ if(!isset($_SESSION['user'])) {
       </div> 
       <div class="profile-section" id="career-goals">
         <p>Career Goals</p>
-        <textarea type="text" class="form-control" name="career_goal" placeholder="Your career goals" style="height: 100px" required></textarea>
+        <textarea type="text" class="form-control" name="career_goal" placeholder="Your career goals" style="height: 100px" required><?php echo $_SESSION['user']['cv']['career_goal'] ?></textarea>
       </div> 
       <div class="profile-section" id="experiences">
         <p>Experiences</p>
-        <textarea type="text" class="form-control" name="experiences" placeholder="Your experiences" style="height: 100px" required></textarea>    
+        <textarea type="text" class="form-control" name="experiences" placeholder="Your experiences" style="height: 100px" required><?php echo $_SESSION['user']['cv']['experiences'] ?></textarea>    
       </div> 
       <div class="profile-section" id="education">
         <p>Education</p>
-        <textarea type="text" class="form-control" name="education" placeholder="Your education" style="height: 100px" required></textarea>
+        <textarea type="text" class="form-control" name="education" placeholder="Your education" style="height: 100px" required><?php echo $_SESSION['user']['cv']['education'] ?></textarea>
       </div> 
       <div class="profile-section" id="skills">
         <p>Skills</p>

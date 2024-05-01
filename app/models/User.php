@@ -1,6 +1,7 @@
 <?php 
 require_once "database.php";
 require_once "CV.php";
+require_once "Address.php";
 class User {
   public static function get_user_by_email($email) {
     $conn = Database::getInstance()->getConnection();
@@ -60,6 +61,12 @@ class User {
       $result = $stmt->get_result();
       if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
+        $user_cv = CV::get_cv_by_id($id);
+        $user_address = Address::get_address_by_id($user['address_id']);
+        if($user_cv) {
+          $user['cv'] = $user_cv;
+          $user['address'] = $user_address;
+        }
         $stmt->close();
         return $user;
       }
@@ -93,9 +100,58 @@ class User {
   }
 
   public static function update($postData) {
-    var_dump($postData);
-    // Get CV by id
-    // Update CV/User
+    $conn = Database::getInstance()->getConnection();
+    $user_id = $postData['user_id'];
+
+    // Data for address
+    $address = $postData['address_address'];
+    $city = $postData['address_city'];
+    $district = $postData['address_district'];
+    $ward = $postData['address_ward'];
+    Address::create($user_id, $address, $ward, $district, $city);
+
+    // Data for CV
+    $careerGoal = $postData['career_goal'];
+    $experiences = $postData['experiences'];
+    $highestDegree = $postData['highest_degree'];
+    $currentPosition = $postData['current_position'];
+    $education = $postData['education'];
+    $willingToRelocation = ($postData['willing_to_relocation'] === 'false') ? 0 : 1;
+    $desiredJobLocation = $postData['desired_job_location'];
+    $desiredJobSalary = $postData['desired_job_salary'];
+
+    // Construct the SQL query to update the CV
+    $sql = "UPDATE CVs SET 
+                career_goal = ?, 
+                experiences = ?, 
+                highest_degree = ?, 
+                current_position = ?, 
+                education = ?, 
+                willing_to_relocation = ?, 
+                desired_job_location = ?, 
+                desired_job_salary = ? 
+            WHERE owner_id = ?";
+
+    // Prepare the statement
+    $stmt = $conn->prepare($sql);
+
+    // Bind parameters
+    $stmt->bind_param("ssssssssi", 
+                      $careerGoal, 
+                      $experiences, 
+                      $highestDegree, 
+                      $currentPosition, 
+                      $education, 
+                      $willingToRelocation, 
+                      $desiredJobLocation, 
+                      $desiredJobSalary, 
+                      $user_id);
+    if($stmt->execute()) {
+      header("Location: " . "http://localhost:8080/profile");
+    } else {
+      echo "Error: " . $stmt->error;
+    }
+    $stmt->close();
   }
 }
 ?>

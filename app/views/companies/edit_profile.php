@@ -8,10 +8,10 @@ if(!isset($_SESSION['user'])) {
 ?>
 <div class="row mt-4 px-5">
   <div class="col-2 d-flex flex-column gap-4" id="profile-actions">
-    <button id="active"><a href="/companies/edit"><i class="fa-solid fa-pen"></i><span>Edit your profile</span></a></button>
-    <button ><a><i class="fa-solid fa-user"></i><span>Companies profile</span></a></button>
+    <button id="active"><a href="/company/profile/edit"><i class="fa-solid fa-pen"></i><span>Edit company profile</span></a></button>
+    <button><a href="/company/profile"><i class="fa-solid fa-user"></i><span>Company profile</span></a></button>
     <button><a><i class="fa-solid fa-suitcase"></i><span>Listed jobs</span></a></button>
-    <button><a href="/profile/cv"><i class="fa-solid fa-file"></i><span>Add new job</span></a></button>
+    <button><a href="/company/add-job"><i class="fa-solid fa-file"></i><span>Add new job</span></a></button>
   </div>
   <div class="col-10 p-4 h-100" id="profile">
   <form id="update-form" action="/post_index.php" method="POST">

@@ -26,12 +26,24 @@ if(!isset($_SESSION['user'])) {
         <p class="fs-4 fw-medium"><?php echo $_SESSION['user']['username']?></p>
         <div class="row">
           <div class="col-4">
-            <p><i class="fa-solid fa-suitcase"></i><span class="prompt">Edit to add your current position</span></p>
+            <p><i class="fa-solid fa-suitcase"></i>
+              <?php if($_SESSION['user']['cv']['current_position']) {
+                echo $_SESSION['user']['cv']['current_position'];
+              } else {
+                echo '<span class="prompt">Edit to add your current position</span>';
+              }?>
+            </p>
             <p><i class="fa-solid fa-envelope"></i><span><?php echo $_SESSION['user']['email'] ?></span></p>
             <p><i class="fa-solid fa-house"></i><span class="prompt">Edit to add your address</span></p>
           </div>
           <div class="col-4">
-            <p><i class="fa-solid fa-user-graduate"></i><span class="prompt">Edit to add highest degree</span></p>
+            <p><i class="fa-solid fa-user-graduate"></i>
+              <?php if($_SESSION['user']['cv']['highest_degree']) {
+                echo $_SESSION['user']['cv']['highest_degree'];
+              } else {
+                echo '<span class="prompt">Edit to add your highest degree</span>';
+              }?>
+            </p>
           </div>
         </div>
       </div>
@@ -44,24 +56,55 @@ if(!isset($_SESSION['user'])) {
       </div>
       <div class="row">
         <p class="col-2">Expected Salary</p>
-        <p class="col-2 prompt">Edit to add expected salary</p>
+        <p class="col-2">              
+          <?php if($_SESSION['user']['cv']['desired_job_salary']) {
+            echo $_SESSION['user']['cv']['desired_job_salary'];
+          } else {
+            echo '<span class="prompt">Edit to add expected salary</span>';
+          }?>
+        </p>
       </div>
       <div class="row">
         <p class="col-2">Willing to relocation</p>
-        <p class="col-2 prompt">Edit to add your decision</p>
+        <p class="col-2">
+        <?php 
+          if($_SESSION['user']['cv']['willing_to_relocation'] !== null) {
+          echo $_SESSION['user']['cv']['willing_to_relocation'] == 0 ? "No" : "Yes";
+        } else {
+          echo '<span class="prompt">Edit to add your decision</span>';
+        }?>
+        </p>
       </div>
     </div> 
     <div class="profile-section" id="career-goals">
       <p>Career Goals</p>
-      <p class="prompt">Edit to add career goals</p>
+      <p>
+        <?php if($_SESSION['user']['cv']['career_goal']) {
+          echo $_SESSION['user']['cv']['career_goal'];
+        } else {
+          echo '<span class="prompt">Edit to add career goals</span>';
+        }?>
+      </p>
     </div> 
     <div class="profile-section" id="experiences">
       <p>Experiences</p>
-      <p class="prompt">Edit to add experiences</p>
+      <p>
+        <?php if($_SESSION['user']['cv']['experiences']) {
+          echo $_SESSION['user']['cv']['experiences'];
+        } else {
+          echo '<span class="prompt">Edit to add experiences</span>';
+        }?>
+      </p>
     </div> 
     <div class="profile-section" id="education">
       <p>Education</p>
-      <p class="prompt">Edit to add education</p>
+      <p>
+        <?php if($_SESSION['user']['cv']['education']) {
+          echo $_SESSION['user']['cv']['education'];
+        } else {
+          echo '<span class="prompt">Edit to add education</span>';
+        }?>
+      </p>
     </div> 
     <div class="profile-section" id="skills">
       <p>Skills</p>

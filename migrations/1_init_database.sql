@@ -50,12 +50,12 @@ CREATE TABLE `Tags` (
 
 CREATE TABLE `CVs` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `career_goal` VARCHAR(255),
-  `experiences` VARCHAR(255),
+  `career_goal` VARCHAR(2048),
+  `experiences` VARCHAR(2048),
   `highest_degree` VARCHAR(255),
   `current_position` VARCHAR(255),
   `skills` VARCHAR(255),
-  `education` VARCHAR(255),
+  `education` VARCHAR(2048),
   `languages` VARCHAR(255),
   `owner_id` integer,
   `willing_to_relocation` boolean,
