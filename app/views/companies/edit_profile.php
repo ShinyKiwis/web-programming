@@ -15,6 +15,7 @@ if(!isset($_SESSION['user'])) {
   </div>
   <div class="col-10 p-4 h-100" id="profile">
   <form id="update-form" action="/post_index.php" method="POST">
+  <input type="hidden" name="action" value="update_user">
     <div class="row" id="profile-header">
       <div class="col-2  d-flex justify-content-center">
           <a id="uploadLink" href="#">
@@ -211,5 +212,5 @@ $(document).ready(function () {
       $('#city-picker').selectpicker('refresh');
     }
   })
-})
+});
 </script>
