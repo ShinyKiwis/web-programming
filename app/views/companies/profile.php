@@ -26,18 +26,18 @@ if(!isset($_SESSION['user'])) {
         <p class="fs-4 fw-medium"><?php echo $_SESSION['user']['username']?></p>
         <div class="row">
           <div class="col-4">
-            <p><i class="fa-solid fa-calendar"></i><span>Add hiring end date</span></p>
+            <p><i class="fa-solid fa-person"></i><span>200+</span></p>
             <p><i class="fa-solid fa-envelope"></i><?php echo $_SESSION['user']['email'] ?></p>
-            <p><i class="fa-solid fa-location-dot"></i><span class="prompt">Add location</span></p>
+            <p><i class="fa-solid fa-house"></i><span class="prompt">Edit to add your address</span></p>
           </div>
         </div>
       </div>
     </div>
     <div class="profile-section" id="description">
-      <p>Description</p>
-      <p class="prompt">Add description</p>
+      <p>About Us</p>
+      <p class="prompt">Edit to add your company description</p>
     </div> 
-    <div class="profile-section" id="requirements">
+    <!-- <div class="profile-section" id="requirements">
       <p>Requirements</p>
       <p class="prompt">Add requirements</p>
     </div>
@@ -50,4 +50,4 @@ if(!isset($_SESSION['user'])) {
       <p class="prompt">Add benefit</p>
     </div> 
   </div>
-</div>
+</div> -->
