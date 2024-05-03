@@ -96,6 +96,20 @@ if(!isset($_SESSION['user'])) {
   </div>
 </div>
 <script>
+  const requires = `<?php echo $_SESSION['user']['cv']['requires']; ?>`;
+const benefits = `<?php echo $_SESSION['user']['cv']['benefits']; ?>`;
+
+  if(requires != ""){
+  requires.split("@").forEach(require => {
+    $('#requireList').append('<li class="d-flex align-items-center mt-2" style="width: 15em;">' + require + ' <button class="deleteRequireBtn btn btn-danger ms-auto">Delete</button></li>');
+  })
+}
+
+if(benefits != "") {
+  benefits.split("@").forEach(benefit => {
+    $('#benefitList').append('<li class="d-flex align-items-center mt-2" style="width: 15em;">' + benefit + ' <button class="deleteBenefitBtn btn btn-danger ms-auto">Delete</button></li>');
+  })
+}
   $(document).ready(function() {
     $('#addRequireIcon').click(function(event) {
         event.preventDefault();
