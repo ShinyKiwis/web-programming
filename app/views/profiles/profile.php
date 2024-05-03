@@ -154,7 +154,6 @@ $.ajax({
   dataType: "json",
   success: function(data) {
     const cities = Object.values(data);
-    console.log(cities);
     let address = "";
     let selectedCityValue = "";
     let selectedDistrictValue = "";

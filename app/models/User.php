@@ -28,7 +28,7 @@ class User {
     $conn = Database::getInstance()->getConnection();
     $username = $postData['username'];
     $email = $postData['email'];
-    $password = $postData['password'];
+    $password = password_hash($postData['password'], PASSWORD_DEFAULT);
     $type = $postData['userType'];
     if (!is_null(self::get_user_by_email($email))) {
       exit(json_encode(array("status" => "error", "message" => "Email already exists!")));
@@ -43,6 +43,7 @@ class User {
       $user_id = $conn->insert_id;
       // Create emptyCV
       CV::create($user_id);
+      Address::create($user_id);
       $stmt->close();
       exit(json_encode(array("status" => "success")));
     } else {
@@ -108,7 +109,7 @@ class User {
     $city = $postData['address_city'];
     $district = $postData['address_district'];
     $ward = $postData['address_ward'];
-    Address::create($user_id, $address, $ward, $district, $city);
+    Address::update($user_id, $address, $ward, $district, $city);
 
     // Data for CV
     $careerGoal = $postData['career_goal'];

@@ -26,12 +26,24 @@ if(!isset($_SESSION['user'])) {
         <p class="fs-4 fw-medium"><?php echo $_SESSION['user']['username']?></p>
         <div class="row">
           <div class="col-4">
-            <p><i class="fa-solid fa-suitcase"></i><span>Junior Backend Engineer</span></p>
+            <p><i class="fa-solid fa-suitcase"></i>
+              <?php if($_SESSION['user']['cv']['current_position']) {
+                echo $_SESSION['user']['cv']['current_position'];
+              } else {
+                echo '<span class="prompt">Edit to add your current position</span>';
+              }?>
+            </p>
             <p><i class="fa-solid fa-envelope"></i><span><?php echo $_SESSION['user']['email'] ?></span></p>
-            <p><i class="fa-solid fa-house"></i><span class="prompt">Edit to add your address</span></p>
+            <p><i class="fa-solid fa-house"></i><span class="prompt" id="user_address">Edit to add your address</span></p>
           </div>
           <div class="col-4">
-            <p><i class="fa-solid fa-user-graduate"></i><span class="prompt">Edit to add highest degree</span></p>
+            <p><i class="fa-solid fa-user-graduate"></i>
+              <?php if($_SESSION['user']['cv']['highest_degree']) {
+                echo $_SESSION['user']['cv']['highest_degree'];
+              } else {
+                echo '<span class="prompt">Edit to add your highest degree</span>';
+              }?>
+            </p>
           </div>
         </div>
       </div>
@@ -90,5 +102,49 @@ function render_cv() {
 }
 
 render_cv();
+const selectedAddress = `<?php echo $_SESSION['user']['address']['address']; ?>`;
+const selectedCity = `<?php echo $_SESSION['user']['address']['city']; ?>`;
+const selectedDistrict = `<?php echo $_SESSION['user']['address']['district']; ?>`;
+const selectedWard = `<?php echo $_SESSION['user']['address']['ward']; ?>`;
+const desiredLocation = `<?php echo $_SESSION['user']['cv']['desired_job_location']; ?>`;
+
+$.ajax({
+  url: "http://localhost:8080/data/address.json",
+  method: "GET",
+  dataType: "json",
+  success: function(data) {
+    const cities = Object.values(data);
+    let address = "";
+    let selectedCityValue = "";
+    let selectedDistrictValue = "";
+    let selectedWardValue = "";
+    cities.forEach(city => {
+      if(city.slug == selectedCity) {
+        selectedCityValue = city.name_with_type;
+        city.quan_huyen.forEach(district => {
+          if(district.slug == selectedDistrict) {
+            selectedDistrictValue = district.name_with_type;
+            district.xa_phuong.forEach(ward => {
+              if(ward.slug == selectedWard) {
+                selectedWardValue = ward.name_with_type;
+              }
+            })
+          }
+        })
+      }
+    })
+    if(selectedWardValue && selectedCityValue && selectedDistrictValue) {
+      $("#user_address").removeClass("prompt");
+      $("#user_address").text([selectedAddress, selectedWardValue, selectedDistrictValue, selectedCityValue].join(", "))
+    }
+
+    cities.forEach(city => {
+      if(city.slug == desiredLocation) {
+        $("#desired_job_location").removeClass("prompt");
+        $("#desired_job_location").text(city.name_with_type);
+      }
+    })
+  }
+})
 
 </script>

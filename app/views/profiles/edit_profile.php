@@ -117,13 +117,17 @@ if(!isset($_SESSION['user'])) {
 const skills = `<?php echo $_SESSION['user']['cv']['skills']; ?>`;
 const languages = `<?php echo $_SESSION['user']['cv']['languages']; ?>`;
 
-skills.split("@").forEach(skill => {
-  $('#skillList').append('<li class="d-flex align-items-center mt-2" style="width: 15em;">' + skill + ' <button class="deleteSkillBtn btn btn-danger ms-auto">Delete</button></li>');
-})
+if(skills != ""){
+  skills.split("@").forEach(skill => {
+    $('#skillList').append('<li class="d-flex align-items-center mt-2" style="width: 15em;">' + skill + ' <button class="deleteSkillBtn btn btn-danger ms-auto">Delete</button></li>');
+  })
+}
 
-languages.split("@").forEach(language => {
-  $('#languageList').append('<li class="d-flex align-items-center mt-2" style="width: 15em;">' + language + ' <button class="deleteLanguageBtn btn btn-danger ms-auto">Delete</button></li>');
-})
+if(languages != "") {
+  languages.split("@").forEach(language => {
+    $('#languageList').append('<li class="d-flex align-items-center mt-2" style="width: 15em;">' + language + ' <button class="deleteLanguageBtn btn btn-danger ms-auto">Delete</button></li>');
+  })
+}
 
 $(document).ready(function() {
     $('#addSkillIcon').click(function(event) {

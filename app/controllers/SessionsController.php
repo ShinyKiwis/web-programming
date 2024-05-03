@@ -15,7 +15,7 @@ class SessionsController {
     $result = User::get_user_by_email($email);
     if(!is_null($result)) {
       $fetchPassword = $result['password'];
-      if ($fetchPassword != $password) {
+      if (!password_verify($password, $fetchPassword)) {
         exit(json_encode(array("status" => "error", "message" => "Your email or password is wrong!")));
       } else {
         ini_set('session.gc_maxlifetime', 10800);
