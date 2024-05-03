@@ -1,10 +1,10 @@
 <div class="mx-5 shadow-lg rounded px-2 py-4 mt-2">
-  <form class="d-flex gap-2">
+  <form class="d-flex gap-2" id="push-form" action="" method="GET">
     <div class="input-group flex-nowrap w-50">
       <span class="input-group-text" id="addon-wrapping">
         <i class="fa-solid fa-magnifying-glass"></i>
       </span>
-      <input type="text" class="form-control" placeholder="Search jobs..." aria-label="seach-query" aria-describedby="addon-wrapping">
+      <input type="text" name="job_name" class="form-control" placeholder="Search jobs..." aria-label="seach-query" aria-describedby="addon-wrapping">
     </div>
     <select class="selectpicker" name="location" title="Location" id="city-picker" data-live-search="true" data-allow-clear="true">
     </select>
@@ -20,7 +20,7 @@
       <option value="manager">Manager</option>
       <option value="director">Director and above</option>
     </select>
-    <button type="submit" class="btn btn-primary ms-auto">Search</button>
+    <button id="search_btn" type="submit" class="btn btn-primary ms-auto">Search</button>
   </form>
 </div>
 <script>
@@ -46,4 +46,5 @@ $(document).ready(function () {
     }
   })
 })
+
 </script>

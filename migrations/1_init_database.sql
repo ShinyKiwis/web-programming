@@ -34,6 +34,8 @@ CREATE TABLE `Jobs` (
   `expiration` date,
   `location` VARCHAR(255),
   `benefits` VARCHAR(255),
+  `work_arrangement` VARCHAR(255),
+  `levels` VARCHAR(255),
   `company_id` integer
 );
 

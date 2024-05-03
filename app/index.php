@@ -13,13 +13,14 @@ $routes = [
 ];
 
 $url = $_SERVER['REQUEST_URI'];
+$urlParts = explode('?', $url);
 
-if($url == "/welcome") {
+if($urlParts[0] == "/welcome") {
   ob_start();
   $pageTitle = "Welcome | Work Seekers";
   include("views/welcome.html");
-} else if(array_key_exists($url, $routes)) {
-  $mapping = $routes[$url];
+} else if(array_key_exists($urlParts[0], $routes)) {
+  $mapping = $routes[$urlParts[0]];
   list($controllerName, $actionName) = explode('#', $mapping);
 
   require_once('controllers/' . $controllerName . '.php');
