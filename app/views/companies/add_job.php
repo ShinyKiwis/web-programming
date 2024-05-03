@@ -8,14 +8,15 @@ if(!isset($_SESSION['user'])) {
 ?>
 <div class="row mt-4 px-5">
   <div class="col-2 d-flex flex-column gap-4" id="profile-actions">
-    <button id="active"><a href=""><i class="fa-solid fa-pen"></i><span>Edit your profile</span></a></button>
-    <button ><a><i class="fa-solid fa-user"></i><span>Companies profile</span></a></button>
+    <button><a href="/company/profile/edit"><i class="fa-solid fa-pen"></i><span>Edit your profile</span></a></button>
+    <button ><a href="/company/profile"><i class="fa-solid fa-user"></i><span>Companies profile</span></a></button>
     <button><a><i class="fa-solid fa-suitcase"></i><span>Listed jobs</span></a></button>
-    <button><a href="/profile/cv"><i class="fa-solid fa-file"></i><span>Add new job</span></a></button>
+    <button id="active"><a href="/company/add-job"><i class="fa-solid fa-file"></i><span>Add new job</span></a></button>
   </div>
   <div class="col-10 p-4 h-100" id="profile">
   <form id="update-form" action="/post_index.php" method="POST">
-  <input type="hidden" name="action" value="update_user">
+    <input type="hidden" name="user_id" id="user_id" value=<?php echo $_SESSION['user_id'] ?>>
+    <input type="hidden" name="action" value="create_job" />
     <div class="row" id="profile-header">
       <div class="col-2  d-flex justify-content-center">
           <a id="uploadLink" href="#">
@@ -28,19 +29,37 @@ if(!isset($_SESSION['user'])) {
           <input type="file" id="uploadImage" style="display:none" accept="image/*">
       </div>
       <div class="col-10">
-        <p class="fs-4 fw-medium"><input type="text" class="form-control" name="job" placeholder="Job title" style="height: 100px, width: 300px;"></input></p>
+        <p class="fs-4 fw-medium"><input type="text" class="form-control" name="job" placeholder="Job title" style="height: 100px, width: 300px;" required /></p>
         <div class="row">
           <div class="col-4">
-            <p><i class="fa-solid fa-calendar"></i><input type="text" class="form-control" name="enddate_hiring" value="" placeholder="Hiring end date"></p>
+            <p><i class="fa-solid fa-calendar"></i><input type="date" class="form-control" name="enddate_hiring" value="" placeholder="Hiring end date" required /></p>
             <p><i class="fa-solid fa-envelope"></i><?php echo $_SESSION['user']['email'] ?></p>
-            <p><i class="fa-solid fa-location-dot"></i><select class="selectpicker" name="address_city" title="City" data-allow-clear id="city-picker" data-live-search="true" data-width="fit"></select></p>
+            <div class="d-flex gap-4">
+              <p>
+                <i class="fa-solid fa-location-dot"></i>
+                <select class="selectpicker" name="address_city" title="City" data-allow-clear id="city-picker" data-live-search="true" data-width="fit" required>
+                </select>
+              </p>
+              <select class="selectpicker" name="work_arrangement" title="Work arrangements" data-allow-clear="true" required>
+                <option value="onsite">On site</option>
+                <option value="remote">Remote</option>
+                <option value="hybrid">Hybrid</option>
+              </select>
+              <select class="selectpicker" name="level" title="Levels" data-allow-clear="true" required>
+                <option value="intern">Intern/Student</option>
+                <option value="fresher">Fresher/Entry level</option>
+                <option value="experienced">Experienced (non-manager)</option>
+                <option value="manager">Manager</option>
+                <option value="director">Director and above</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="profile-section" id="description">
+    <div class="profile-section mt-4" id="description">
       <p>Description</p>
-      <textarea type="text" class="form-control" name="description" placeholder="Company description" style="height: 100px"></textarea>
+      <textarea type="text" class="form-control" name="description" placeholder="Job description" style="height: 100px" required></textarea>
     </div> 
     <div class="profile-section" id="requirements">
       <p>Requirements</p>
@@ -53,17 +72,15 @@ if(!isset($_SESSION['user'])) {
     </div>
     <div class="profile-section" id="salary">
       <p>Salary</p>
-      <form>
       <label>
-        <input type="radio" name="option" value="option1"> Negotiate
+        <input type="radio" name="option" value="Salary Negotiation"> Negotiate
       </label><br>
       <label>
-        <input type="radio" name="option" value="option2" id="option2"> Add Salary
+        <input type="radio" name="option"  id="add-salary"> Add Salary
       </label><br>
       <div div div id="additionalInput" style="display:none;">
-        <input type="text" class="form-control mt-2" id="additionalOption" name="additionalOption" placeholder="Enter salary" style="width: 200px;" >
+        <input type="text" class="form-control mt-2" id="additionalOption" name="salary" placeholder="Enter salary" style="width: 200px;" >
       </div>
-      </form>
     </div> 
     <div class="profile-section mt-2" id="benefit">
       <p>Benefit</p>
@@ -74,7 +91,7 @@ if(!isset($_SESSION['user'])) {
         <ul id="benefitList">
         </ul>
     </div>
-    <button type="submit" id="submit" class="btn btn-primary mt-2 float-end">Post</button>
+    <button type="submit" id="submit" class="btn btn-primary mt-2 float-end">Create</button>
 </form>
   </div>
 </div>
@@ -141,7 +158,7 @@ $(document).ready(function() {
             }
             this.submit();
         });
-        $('#option2').click(function() {
+        $('#add-salary').click(function() {
             $('#additionalInput').show();
         });
         $('input[type=radio][value=option1]').click(function() {

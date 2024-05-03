@@ -12,5 +12,7 @@ if($_POST['action'] == 'login') {
   User::get_cv_by_id($_POST);
 } else if($_POST['action'] == 'update_user') {
   User::update($_POST);
+} else if($_POST['action'] == 'create_job') {
+  var_dump($_POST);
 }
 ?>

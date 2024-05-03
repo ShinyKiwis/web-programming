@@ -29,8 +29,13 @@
         <i class="fa-solid fa-circle-user" id="profile-icon" data-bs-toggle="dropdown" aria-expanded="false"></i>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile-icon">
         <?php if(isset($_SESSION['user'])) {
-          echo '<li><a class="dropdown-item" href="/profile">My profile</a></li>';
-          echo '<li><a class="dropdown-item text-danger" href="/logout">Log out</a></li>';
+          if($_SESSION['user']['type'] == 'candidate') {
+            echo '<li><a class="dropdown-item" href="/profile">My profile</a></li>';
+            echo '<li><a class="dropdown-item text-danger" href="/logout">Log out</a></li>';
+          } else {
+            echo '<li><a class="dropdown-item" href="/company/profile">Company profile</a></li>';
+            echo '<li><a class="dropdown-item text-danger" href="/logout">Log out</a></li>';
+          }
         } else {
           echo '<li><a class="dropdown-item" href="/login">Sign in</a></li>';
           echo '<li><a class="dropdown-item" href="/register">Create an account</a></li>';
