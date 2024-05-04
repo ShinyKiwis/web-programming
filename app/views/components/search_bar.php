@@ -6,6 +6,7 @@
       </span>
       <input type="text" name="job_name" class="form-control" placeholder="Search jobs..." aria-label="seach-query" aria-describedby="addon-wrapping">
     </div>
+    <!-- nếu mà là company thì search bar phải render ra cái khác -->
     <select class="selectpicker" name="location" title="Location" id="city-picker" data-live-search="true" data-allow-clear="true">
     </select>
     <select class="selectpicker" name="work_arrangement" title="Work arrangements" data-allow-clear="true">

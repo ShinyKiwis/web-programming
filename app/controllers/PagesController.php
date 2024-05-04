@@ -7,7 +7,8 @@ class PagesController {
     $instance = Database::getInstance();
     $conn = $instance->getConnection();
     //if user -> goi home_user else home_company
-    return PagesController::home_user($conn);
+    // return PagesController::home_user($conn);
+    return PagesController::home_company($conn);
   }
 
   public function display($result) {
@@ -170,7 +171,69 @@ class PagesController {
   }
   
   public function home_company($conn) {
+    $page = isset($_GET['num']) ? $_GET['num'] : 1;
+    $limit = 30;
+    $start = ($page - 1) * $limit;
+    if($start < 0) {
+      $start = 0;
+    }
+    $result;
+    $result1;
+    if (!isset($_GET['job_name']) && !isset($_GET['location']) && !isset($_GET['work_arrangement']) && !isset($_GET['level'])){
+      $result = $conn->query("SELECT * FROM CVs LIMIT $start, $limit");
+      $result1 = $conn->query("SELECT count(id) AS id FROM CVs");
+    }
+    else{
+      $jobname = $_GET['job_name'];
+      $location = $_GET['location'];
+      $work_arrangement = $_GET['work_arrangement'];
+      $levels = $_GET['level'];
+      $result = $conn->query("SELECT *
+      FROM Jobs j
+      INNER JOIN JobsCVs jc ON j.id = jc.job_id
+      INNER JOIN CVs c ON jc.cv_id = c.id
+      WHERE j.name LIKE '$jobname%'" ." AND c.location LIKE '%$location%'" . "LIMIT $start, $limit");
+      $result1 = $conn->query("SELECT count(c.id) AS id FROM Jobs j
+      INNER JOIN JobsCVs jc ON j.id = jc.job_id
+      INNER JOIN CVs c ON jc.cv_id = c.id
+      WHERE j.name LIKE '$jobname%'" ." AND c.location LIKE '%$location%'");
+    }
     
+    $custCount = $result1->fetch_all(MYSQLI_ASSOC);
+    $total = $custCount[0]['id'];
+    $pages = ceil( $total / $limit );
+    
+    $Previous = $page - 1;
+    $Next = $page + 1;
+
+    ob_start();
+    PagesController::display_company($result);
+
+    include(self::DEFAULT_VIEW_FOLDER . 'candidates.php');
+    $content = ob_get_clean();
+    return $content;
+
   }
+
+  public function display_company($result) {
+    $instance = Database::getInstance();
+  
+    $conn = $instance->getConnection();
+    
+    // Process the result set
+    $num_rows = $result->num_rows;
+    if ($num_rows > 0) {
+      $loopFlag = true;
+      while($row = $result->fetch_assoc()) {
+        include(self::DEFAULT_VIEW_FOLDER . 'homecompany_item.php');
+        if (!$loopFlag) {
+          break;
+        }   
+      }
+    } else {
+      echo "0 results";
+    }
+  }
+
 }
 ?>

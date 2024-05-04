@@ -9,7 +9,7 @@ $routes = [
   "/profile/cv" => "UsersController#upload_cv",
   "/company/profile" => 'CompaniesController#show',
   "/company/profile/edit" => 'CompaniesController#edit',
-  "/company/add-job" => 'CompaniesController#add_job'
+  "/company/add-job" => 'CompaniesController#add_job',
 ];
 
 $url = $_SERVER['REQUEST_URI'];

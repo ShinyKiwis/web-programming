@@ -91,13 +91,13 @@ if(!isset($_SESSION['user'])) {
         <ul id="benefitList">
         </ul>
     </div>
-    <button type="submit" id="submit" class="btn btn-primary mt-2 float-end">Create</button>
+    <button type="submit" id="submit_btn" class="btn btn-primary mt-2 float-end">Create</button>
 </form>
   </div>
 </div>
 <script>
-  const requires = `<?php echo $_SESSION['user']['cv']['requires']; ?>`;
-const benefits = `<?php echo $_SESSION['user']['cv']['benefits']; ?>`;
+const requires = `<?php if (isset($_SESSION['user']['cv']['requires'])) echo $_SESSION['user']['cv']['requires']; ?>`;
+const benefits = `<?php if (isset($_SESSION['user']['cv']['benefits'])) echo $_SESSION['user']['cv']['benefits']; ?>`;
 
   if(requires != ""){
   requires.split("@").forEach(require => {
@@ -122,19 +122,19 @@ if(benefits != "") {
     $(document).on('click', '.deleteRequireBtn', function() {
         $(this).parent().remove();
     });
-    $('#update-form').submit(function(event) {
-        var requires = [];
-        $('#requireList li').each(function() {
-            var require = $(this).text().trim().split(' ')[0];
-            requires.push(Require);
-        });
-        var hiddenInput = $('<input>').attr({
-            type: 'hidden',
-            name: 'requires',
-            value: requires.join('@')
-        });
-        $(this).append(hiddenInput);
-    });
+    // $('#update-form').submit(function(event) {
+    //     var requires = [];
+    //     $('#requireList li').each(function() {
+    //         var require = $(this).text().trim().split(' ')[0];
+    //         requires.push(require);
+    //     });
+    //     var hiddenInput = $('<input>').attr({
+    //         type: 'hidden',
+    //         name: 'requires',
+    //         value: requires.join('@')
+    //     });
+    //     $(this).append(hiddenInput);
+    // });
 });
 $(document).ready(function() {
     $('#addBenefitIcon').click(function(event) {
@@ -148,26 +148,53 @@ $(document).ready(function() {
     $(document).on('click', '.deleteBenefitBtn', function() {
         $(this).parent().remove();
     });
-    $('#update-form').submit(function(event) {
-        var benefits = [];
-        $('#benefitList li').each(function() {
-            var benefit = $(this).text().trim().split(' ')[0];
-            benefits.push(Benefit);
-        });
-        var hiddenInput = $('<input>').attr({
-            type: 'hidden',
-            name: 'benefits',
-            value: benefits.join('@')
-        });
-        $(this).append(hiddenInput);
-    });
+    // $('#update-form').submit(function(event) {
+    //     var benefits = [];
+    //     $('#benefitList li').each(function() {
+    //         var benefit = $(this).text().trim().split(' ')[0];
+    //         benefits.push(benefit);
+    //     });
+    //     var hiddenInput = $('<input>').attr({
+    //         type: 'hidden',
+    //         name: 'benefits',
+    //         value: benefits.join('@')
+    //     });
+    //     $(this).append(hiddenInput);
+    // });
 });
+
 $(document).ready(function() {
         $('#update-form').submit(function(event) {
             event.preventDefault();
+
+            var benefits = [];
+            $('#benefitList li').each(function() {
+                var benefit = $(this).text().trim().split(' ')[0];
+                benefits.push(benefit);
+            });
+            var hiddenInput = $('<input>').attr({
+                type: 'hidden',
+                name: 'benefits',
+                value: benefits.join('@')
+            });
+            $(this).append(hiddenInput);
+
+            var requires = [];
+            $('#requireList li').each(function() {
+                var require = $(this).text().trim().split(' ')[0];
+                requires.push(require);
+            });
+            var hiddenInput = $('<input>').attr({
+                type: 'hidden',
+                name: 'requires',
+                value: requires.join('@')
+            });
+            $(this).append(hiddenInput);
+
             var selectedOption = $('input[type=radio][name=option]:checked').val();
             if (selectedOption === 'option2') {
                 var additionalValue = $('#additionalOption').val().trim();
+
                 $(this).append('<input type="hidden" name="option2Value" value="' + additionalValue + '">');
             }
             this.submit();
@@ -179,6 +206,8 @@ $(document).ready(function() {
             $('#additionalInput').hide();
         });
     });
+
+
     $(document).ready(function(){
   $('#uploadImage').change(function(){
     var file = this.files[0];
