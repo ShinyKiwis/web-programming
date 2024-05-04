@@ -6,42 +6,8 @@ class PagesController {
 
     $instance = Database::getInstance();
     $conn = $instance->getConnection();
-    
-    $page = isset($_GET['num']) ? $_GET['num'] : 1;
-    $limit = 30;
-    $start = ($page - 1) * $limit;
-    if($start < 0) {
-      $start = 0;
-    }
-    $result;
-    $result1;
-    
-    if (!isset($_GET['job_name']) && !isset($_GET['location']) && !isset($_GET['work_arrangement']) && !isset($_GET['level'])){
-      $result = $conn->query("SELECT * FROM Jobs LIMIT $start, $limit");
-      $result1 = $conn->query("SELECT count(id) AS id FROM Jobs");
-    }
-    else{
-      $jobname = $_GET['job_name'];
-      $location = $_GET['location'];
-      $work_arrangement = $_GET['work_arrangement'];
-      $levels = $_GET['level'];
-      $result = $conn->query("SELECT * FROM Jobs WHERE name LIKE '$jobname%'" ." AND location LIKE '%$location%'" . " AND levels LIKE '%$levels%'"."LIMIT $start, $limit");
-      $result1 = $conn->query("SELECT count(id) AS id FROM Jobs WHERE name LIKE '$jobname%' " ." AND location LIKE '%$location%'". " AND levels LIKE '%$levels%'");
-    }
-    
-    $custCount = $result1->fetch_all(MYSQLI_ASSOC);
-    $total = $custCount[0]['id'];
-    $pages = ceil( $total / $limit );
-    
-    $Previous = $page - 1;
-    $Next = $page + 1;
-
-    ob_start();
-    PagesController::display($result);
-
-    include(self::DEFAULT_VIEW_FOLDER . 'home.php');
-    $content = ob_get_clean();
-    return $content;
+    //if user -> goi home_user else home_company
+    return PagesController::home_user($conn);
   }
 
   public function display($result) {
@@ -161,8 +127,50 @@ class PagesController {
     }
   
     // Close database connection
-    $conn->close();
+    // $conn->close();
   }
   
+  public function home_user($conn) {
+    $page = isset($_GET['num']) ? $_GET['num'] : 1;
+    $limit = 30;
+    $start = ($page - 1) * $limit;
+    if($start < 0) {
+      $start = 0;
+    }
+    $result;
+    $result1;
+    
+    if (!isset($_GET['job_name']) && !isset($_GET['location']) && !isset($_GET['work_arrangement']) && !isset($_GET['level'])){
+      $result = $conn->query("SELECT * FROM Jobs LIMIT $start, $limit");
+      $result1 = $conn->query("SELECT count(id) AS id FROM Jobs");
+    }
+    else{
+      $jobname = $_GET['job_name'];
+      $location = $_GET['location'];
+      $work_arrangement = $_GET['work_arrangement'];
+      $levels = $_GET['level'];
+      $result = $conn->query("SELECT * FROM Jobs WHERE name LIKE '$jobname%'" ." AND location LIKE '%$location%'" . " AND levels LIKE '%$levels%'"."LIMIT $start, $limit");
+      $result1 = $conn->query("SELECT count(id) AS id FROM Jobs WHERE name LIKE '$jobname%' " ." AND location LIKE '%$location%'". " AND levels LIKE '%$levels%'");
+    }
+    
+    $custCount = $result1->fetch_all(MYSQLI_ASSOC);
+    $total = $custCount[0]['id'];
+    $pages = ceil( $total / $limit );
+    
+    $Previous = $page - 1;
+    $Next = $page + 1;
+
+    ob_start();
+    PagesController::display($result);
+
+    include(self::DEFAULT_VIEW_FOLDER . 'home.php');
+    $content = ob_get_clean();
+    return $content;
+
+  }
+  
+  public function home_company($conn) {
+    
+  }
 }
 ?>
