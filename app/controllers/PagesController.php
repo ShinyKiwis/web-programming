@@ -157,10 +157,10 @@ class PagesController {
     else{
       $jobname = $_GET['job_name'];
       $location = $_GET['location'];
-      $work_arrangement = $_GET['work_arrangement'];
+      $work_arrangements = $_GET['work_arrangement'];
       $levels = $_GET['level'];
-      $result = $conn->query("SELECT * FROM Jobs WHERE name LIKE '$jobname%'" ." AND location LIKE '%$location%'" . " AND work_arrangement LIKE '%$work_arrangement%'" ." AND levels LIKE '%$levels%'"."LIMIT $start, $limit");
-      $result1 = $conn->query("SELECT count(id) AS id FROM Jobs WHERE name LIKE '$jobname%' " ." AND location LIKE '%$location%'". " AND work_arrangement LIKE '%$work_arrangement%'" . " AND levels LIKE '%$levels%'");
+      $result = $conn->query("SELECT * FROM Jobs WHERE name LIKE '$jobname%'" ." AND location LIKE '%$location%'" . " AND work_arrangement LIKE '%$work_arrangements%'" ." AND levels LIKE '%$levels%'"."LIMIT $start, $limit");
+      $result1 = $conn->query("SELECT count(id) AS id FROM Jobs WHERE name LIKE '$jobname%' " ." AND location LIKE '%$location%'". " AND work_arrangement LIKE '%$work_arrangements%'" . " AND levels LIKE '%$levels%'");
     }
     
     $custCount = $result1->fetch_all(MYSQLI_ASSOC);
@@ -188,24 +188,24 @@ class PagesController {
     }
     $result;
     $result1;
-    if (!isset($_GET['job_name']) && !isset($_GET['desired_job_location']) && !isset($_GET['work_arrangement']) && !isset($_GET['level'])){
+    if (!isset($_GET['job_name']) && !isset($_GET['location']) && !isset($_GET['work_arrangement']) && !isset($_GET['level'])){
       $result = $conn->query("SELECT * FROM CVs LIMIT $start, $limit");
       $result1 = $conn->query("SELECT count(id) AS id FROM CVs");
     }
     else{
       $jobname = $_GET['job_name'];
-      $desired_job_location = $_GET['desired_job_location'];
+      $location = $_GET['location'];
       $work_arrangement = $_GET['work_arrangement'];
       $levels = $_GET['level'];
       $result = $conn->query("SELECT *
       FROM Jobs j
       INNER JOIN JobsCVs jc ON j.id = jc.job_id
       INNER JOIN CVs c ON jc.cv_id = c.id
-      WHERE j.name LIKE '$jobname%'" ." AND c.desired_job_location LIKE '%$desired_job_location%'" . " AND j.work_arrangement LIKE '%$work_arrangement%'" ." AND j.levels LIKE '%$levels%'" ."LIMIT $start, $limit");
+      WHERE j.name LIKE '$jobname%'" ." AND c.desired_job_location LIKE '%$location%'" . " AND j.work_arrangement LIKE '%$work_arrangement%'" ." AND j.levels LIKE '%$levels%'" ."LIMIT $start, $limit");
       $result1 = $conn->query("SELECT count(c.id) AS id FROM Jobs j
       INNER JOIN JobsCVs jc ON j.id = jc.job_id
       INNER JOIN CVs c ON jc.cv_id = c.id
-      WHERE j.name LIKE '$jobname%'" ." AND c.desired_job_location LIKE '%$desired_job_location%'". " AND j.work_arrangement LIKE '%$work_arrangement%'" ." AND j.levels LIKE '%$levels%'");
+      WHERE j.name LIKE '$jobname%'" ." AND c.location LIKE '%$location%'". " AND j.work_arrangement LIKE '%$work_arrangement%'" ." AND j.levels LIKE '%$levels%'");
     }
     
     $custCount = $result1->fetch_all(MYSQLI_ASSOC);
