@@ -29,7 +29,37 @@
           <p class="card-text "><a style="font-weight:bold;">Position: </a><?php echo $row["current_position"]; ?></p>
           <p class="card-text text-danger"><a style="font-weight:bold;">Expected Salary: </a><?php echo $row["desired_job_salary"]; ?></p>
           <p class="card-text"><a style="font-weight:bold;">Location: </a><?php echo $row["desired_job_location"]; ?></p>
-          <p class="card-text"><a style="font-weight:bold;">Languages: </a><?php echo $row["languages"]; ?></p>
+          <p class="card-text"><a style="font-weight:bold;">Languages: </a><?php $languages = $row["languages"];
+
+// Check if $languages is not null and not empty
+if ($languages !== null && $languages !== '') {
+    // Split the string into an array using '@' as the delimiter
+    $language_pairs = explode('@', $languages);
+
+    // Initialize an empty array to store the formatted strings
+    $formatted_languages = array();
+
+    // Loop through each pair in the array
+    foreach ($language_pairs as $pair) {
+        // Split the pair into individual parts
+        $parts = explode(' ', $pair);
+
+        // Join the parts with space
+        $formatted_pair = implode(' ', $parts);
+
+        // Add the formatted pair to the result array
+        $formatted_languages[] = $formatted_pair;
+    }
+
+    // Output the formatted strings
+    echo implode(', ', $formatted_languages);
+} else {
+    // Handle case where $row["languages"] is null or empty
+    echo "No languages specified";
+}
+
+
+ ?></p>
         </div>
       </div>
     </div>
@@ -71,7 +101,37 @@
           <p class="card-text "><a style="font-weight:bold;">Position: </a><?php echo $row["current_position"]; ?></p>
           <p class="card-text text-danger"><a style="font-weight:bold;">Expected Salary: </a><?php echo $row["desired_job_salary"]; ?></p>
           <p class="card-text"><a style="font-weight:bold;">Location: </a><?php echo $row["desired_job_location"]; ?></p>
-          <p class="card-text"><a style="font-weight:bold;">Languages: </a><?php echo $row["languages"]; ?></p>
+
+          <p class="card-text"><a style="font-weight:bold;">Languages: </a><?$languages = $row["languages"];
+
+// Check if $languages is not null and not empty
+if ($languages !== null && $languages !== '') {
+    // Split the string into an array using '@' as the delimiter
+    $language_pairs = explode('@', $languages);
+
+    // Initialize an empty array to store the formatted strings
+    $formatted_languages = array();
+
+    // Loop through each pair in the array
+    foreach ($language_pairs as $pair) {
+        // Split the pair into individual parts
+        $parts = explode(' ', $pair);
+
+        // Join the parts with space
+        $formatted_pair = implode(' ', $parts);
+
+        // Add the formatted pair to the result array
+        $formatted_languages[] = $formatted_pair;
+    }
+
+    // Output the formatted strings
+    echo implode(', ', $formatted_languages);
+} else {
+    // Handle case where $row["languages"] is null or empty
+    echo "No languages specified";
+}
+
+ ?></p>
         </div>
       </div>
     </div>

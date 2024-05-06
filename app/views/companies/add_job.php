@@ -127,27 +127,37 @@ $(document).ready(function() {
         $('#update-form').submit(function(event) {
             event.preventDefault();
 
+            var requirements = [];
+            $('#requireList li').each(function() {
+            var requirement = $(this).clone()    
+                               .children()  
+                               .remove()    
+                               .end()       
+                               .text()      
+                               .trim();     
+            requirements.push(requirement);
+            });
+            var hiddenInput = $('<input>').attr({
+            type: 'hidden',
+            name: 'requirements',
+            value: requirements.join('@')
+            });
+            $(this).append(hiddenInput);
+
             var benefits = [];
             $('#benefitList li').each(function() {
-                var benefit = $(this).text().trim().split(' ')[0];
-                benefits.push(benefit);
+            var benefit = $(this).clone()    
+                                  .children()  
+                                  .remove()    
+                                  .end()       
+                                  .text()     
+                                  .trim();     
+            benefits.push(benefit);
             });
             var hiddenInput = $('<input>').attr({
                 type: 'hidden',
                 name: 'benefits',
                 value: benefits.join('@')
-            });
-            $(this).append(hiddenInput);
-
-            var requires = [];
-            $('#requireList li').each(function() {
-                var require = $(this).text().trim().split(' ')[0];
-                requires.push(require);
-            });
-            var hiddenInput = $('<input>').attr({
-                type: 'hidden',
-                name: 'requires',
-                value: requires.join('@')
             });
             $(this).append(hiddenInput);
 

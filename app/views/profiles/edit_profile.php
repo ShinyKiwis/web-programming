@@ -141,13 +141,20 @@ $(document).ready(function() {
             $('#skillInput').val('');
         }
     });
+
     $(document).on('click', '.deleteSkillBtn', function() {
         $(this).parent().remove();
     });
+
     $('#update-form').submit(function(event) {
         var skills = [];
         $('#skillList li').each(function() {
-            var skill = $(this).text().trim().split(' ')[0];
+            var skill = $(this).clone()    
+                               .children()  
+                               .remove()    
+                               .end()       
+                               .text()      
+                               .trim();     
             skills.push(skill);
         });
         var hiddenInput = $('<input>').attr({
@@ -158,6 +165,7 @@ $(document).ready(function() {
         $(this).append(hiddenInput);
     });
 });
+
 $(document).ready(function() {
     $('#addLanguageIcon').click(function(event) {
         event.preventDefault();
@@ -167,13 +175,20 @@ $(document).ready(function() {
             $('#languageInput').val('');
         }
     });
+
     $(document).on('click', '.deleteLanguageBtn', function() {
         $(this).parent().remove();
     });
+
     $('#update-form').submit(function(event) {
         var languages = [];
         $('#languageList li').each(function() {
-            var language = $(this).text().trim().split(' ')[0];
+            var language = $(this).clone()    
+                               .children()  
+                               .remove()    
+                               .end()      
+                               .text()      
+                               .trim();     
             languages.push(language);
         });
         var hiddenInput = $('<input>').attr({
@@ -184,6 +199,7 @@ $(document).ready(function() {
         $(this).append(hiddenInput);
     });
 });
+
 $(document).ready(function(){
   $('#uploadImage').change(function(){
     var file = this.files[0];
