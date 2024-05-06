@@ -150,8 +150,8 @@ class PagesController {
       $location = $_GET['location'];
       $work_arrangement = $_GET['work_arrangement'];
       $levels = $_GET['level'];
-      $result = $conn->query("SELECT * FROM Jobs WHERE name LIKE '$jobname%'" ." AND location LIKE '%$location%'" . " AND levels LIKE '%$levels%'"."LIMIT $start, $limit");
-      $result1 = $conn->query("SELECT count(id) AS id FROM Jobs WHERE name LIKE '$jobname%' " ." AND location LIKE '%$location%'". " AND levels LIKE '%$levels%'");
+      $result = $conn->query("SELECT * FROM Jobs WHERE name LIKE '$jobname%'" ." AND location LIKE '%$location%'" . " AND work_arrangement LIKE '%$work_arrangement%'" ." AND levels LIKE '%$levels%'"."LIMIT $start, $limit");
+      $result1 = $conn->query("SELECT count(id) AS id FROM Jobs WHERE name LIKE '$jobname%' " ." AND location LIKE '%$location%'". " AND work_arrangement LIKE '%$work_arrangement%'" . " AND levels LIKE '%$levels%'");
     }
     
     $custCount = $result1->fetch_all(MYSQLI_ASSOC);
@@ -192,11 +192,11 @@ class PagesController {
       FROM Jobs j
       INNER JOIN JobsCVs jc ON j.id = jc.job_id
       INNER JOIN CVs c ON jc.cv_id = c.id
-      WHERE j.name LIKE '$jobname%'" ." AND c.location LIKE '%$location%'" . "LIMIT $start, $limit");
+      WHERE j.name LIKE '$jobname%'" ." AND c.location LIKE '%$location%'" . " AND j.work_arrangement LIKE '%$work_arrangement%'" ." AND j.levels LIKE '%$levels%'" ."LIMIT $start, $limit");
       $result1 = $conn->query("SELECT count(c.id) AS id FROM Jobs j
       INNER JOIN JobsCVs jc ON j.id = jc.job_id
       INNER JOIN CVs c ON jc.cv_id = c.id
-      WHERE j.name LIKE '$jobname%'" ." AND c.location LIKE '%$location%'");
+      WHERE j.name LIKE '$jobname%'" ." AND c.location LIKE '%$location%'". " AND j.work_arrangement LIKE '%$work_arrangement%'" ." AND j.levels LIKE '%$levels%'");
     }
     
     $custCount = $result1->fetch_all(MYSQLI_ASSOC);

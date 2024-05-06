@@ -16,10 +16,6 @@
       ?>
       <div class="col-md-9">
         <div class="card-body">
-          <?php
-          $sql = "SELECT * FROM Tags INNER JOIN JobsTags ON Tags.id = JobsTags.tag_id where JobsTags.job_id =". $row["id"] ;//query JobsTags join với tag luôn -> 
-          $result_3 = $conn->query($sql);
-          ?>
           <a href="#" class="card-title"><?php echo $row["name"]; ?></a>
           <p class="card-text"><?php echo $row_company["name"]; ?></p>
           <p class="card-text">
@@ -36,19 +32,10 @@
             </small>
           </p>
           <?php
-          if ($result_3->num_rows > 0) {
-            // Start the badge container
             echo '<div class="badge-container">';
-            
-            // Fetch and display each associated tag
-            while ($row_tag = $result_3->fetch_assoc()) {
-                // Generate HTML for each tag
-                echo '<span class="badge rounded-pill badge-primary">' . $row_tag['name'] . '</span>';
-            }
-            
-            // End the badge container
+            echo '<span class="badge rounded-pill badge-primary">' . $row['work_arrangement'] . '</span>';
+            echo '<span class="badge rounded-pill badge-primary">' . $row['levels'] . '</span>';
             echo '</div>';
-          }
           ?>
         </div>
       </div>
@@ -71,11 +58,6 @@
           style="width: 8em; height: 8em;"
         />
       </div>
-      <?php
-      $sql = " SELECT * FROM Companies where Companies.ID = " . $row["company_id"];//query tên công ty -> 
-      $seresult = $conn->query($sql);
-      $row_company = $seresult->fetch_assoc();
-      ?>
       <div class="col-md-9">
         <div class="card-body">
           <?php
@@ -98,19 +80,10 @@
             </small>
           </p>
           <?php
-          if ($result_3->num_rows > 0) {
-            // Start the badge container
             echo '<div class="badge-container">';
-            
-            // Fetch and display each associated tag
-            while ($row_tag = $result_3->fetch_assoc()) {
-                // Generate HTML for each tag
-                echo '<span class="badge rounded-pill badge-primary">' . $row_tag['name'] . '</span>';
-            }
-            
-            // End the badge container
+            echo '<span class="badge rounded-pill badge-primary">' . $row['work_arrangement'] . '</span>';
+            echo '<span class="badge rounded-pill badge-primary">' . $row['levels'] . '</span>';
             echo '</div>';
-          }
           ?>
         </div>
       </div>
