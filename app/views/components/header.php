@@ -21,10 +21,6 @@
           }?>
         </li>
         <li class="nav-item">
-          <i class="fa-solid fa-building"></i>
-          <a class="nav-link" href="#">Company</a>
-        </li>
-        <li class="nav-item">
           <i class="fa-solid fa-user"></i>
           <a class="nav-link" href="/home/candidate">Candidates</a>
         </li>
