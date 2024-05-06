@@ -108,19 +108,6 @@ if(!isset($_SESSION['user'])) {
     $(document).on('click', '.deleteRequireBtn', function() {
         $(this).parent().remove();
     });
-    // $('#update-form').submit(function(event) {
-    //     var requires = [];
-    //     $('#requireList li').each(function() {
-    //         var require = $(this).text().trim().split(' ')[0];
-    //         requires.push(require);
-    //     });
-    //     var hiddenInput = $('<input>').attr({
-    //         type: 'hidden',
-    //         name: 'requires',
-    //         value: requires.join('@')
-    //     });
-    //     $(this).append(hiddenInput);
-    // });
 });
 $(document).ready(function() {
     $('#addBenefitIcon').click(function(event) {
@@ -134,19 +121,6 @@ $(document).ready(function() {
     $(document).on('click', '.deleteBenefitBtn', function() {
         $(this).parent().remove();
     });
-    // $('#update-form').submit(function(event) {
-    //     var benefits = [];
-    //     $('#benefitList li').each(function() {
-    //         var benefit = $(this).text().trim().split(' ')[0];
-    //         benefits.push(benefit);
-    //     });
-    //     var hiddenInput = $('<input>').attr({
-    //         type: 'hidden',
-    //         name: 'benefits',
-    //         value: benefits.join('@')
-    //     });
-    //     $(this).append(hiddenInput);
-    // });
 });
 
 $(document).ready(function() {
