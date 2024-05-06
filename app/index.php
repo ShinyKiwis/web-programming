@@ -10,6 +10,7 @@ $routes = [
   "/company/profile" => 'CompaniesController#show',
   "/company/profile/edit" => 'CompaniesController#edit',
   "/company/add-job" => 'CompaniesController#add_job',
+  "/home/candidate" => 'PagesController#candidate',
 ];
 
 $url = $_SERVER['REQUEST_URI'];

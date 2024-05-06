@@ -7,8 +7,17 @@ class PagesController {
     $instance = Database::getInstance();
     $conn = $instance->getConnection();
     //if user -> goi home_user else home_company
-    // return PagesController::home_user($conn);
+    return PagesController::home_user($conn);
+    // return PagesController::home_company($conn);
+  }
+  public function candidate() {
+    require_once ('models/database.php');
+
+    $instance = Database::getInstance();
+    $conn = $instance->getConnection();
+    //if user -> goi home_user else home_company
     return PagesController::home_company($conn);
+    // return PagesController::home_company($conn);
   }
 
   public function display($result) {
