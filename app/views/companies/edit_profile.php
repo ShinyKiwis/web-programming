@@ -15,6 +15,10 @@ if(!isset($_SESSION['user'])) {
   </div>
   <div class="col-10 p-4 h-100" id="profile">
   <form id="update-form" action="/post_index.php" method="POST">
+
+    <input type="hidden" name="company_id" id="company_id" value=<?php echo $_SESSION['company_id'] ?>>
+    <input type="hidden" name="action" value="update_company">
+
     <div class="row" id="profile-header">
       <div class="col-2  d-flex justify-content-center">
       <a id="uploadLink" href="#">
@@ -27,14 +31,16 @@ if(!isset($_SESSION['user'])) {
           <input type="file" id="uploadImage" style="display:none" accept="image/*">
       </div>
       <div class="col-10">
-          <p class="fs-4 fw-medium"><input type="text" class="form-control" value="<?php echo $_SESSION['user']['username'] ?>" placeholder="Your username"></p>
+          <p class="fs-4 fw-medium"><input type="text" class="form-control" name="company_name" value="<?php echo $_SESSION['user']['company']['name'] ?>" placeholder="Your company name"></p>
           <div class="row">
             <div class="col-3">
-              <p><i class="fa-solid fa-person"></i><input type="text" class="form-control" name="worker_number" value="" placeholder="Number of workers"></p>
-              <p><i class="fa-solid fa-envelope"></i><?php echo $_SESSION['user']['email'] ?></p>
+              <p><i class="fa-solid fa-person"></i><input type="text" class="form-control" name="company_size" value="<?php echo $_SESSION['user']['company']['size'] ?>" placeholder="Number of workers"></p>
+              <p><i class="fa-solid fa-envelope"></i><input type="text" class="form-control" name="company_contact_info" value="<?php echo $_SESSION['user']['company']['contact_info'] ?>" placeholder="Contact information"></p>
             </div>
             <div class="row d-flex align-items-center">
-              <p class="col-3 mb-0"><i class="fa-solid fa-house"></i><input type="text" class="form-control" placeholder="Your address" /></p>
+              <p class="col-3 mb-0"><i class="fa-solid fa-house"></i>
+                <input type="text" class="form-control" value="<?php echo $_SESSION['user']['address']['address'] ?>" name="address_address"placeholder="Your address" />
+              </p>
               <select class="selectpicker" name="address_city" title="City" data-allow-clear id="city-picker" data-live-search="true" data-width="fit"></select>
               <select class="selectpicker" name="address_district" title="District" data-allow-clear id="district-picker" data-live-search="true" data-width="fit" disabled></select>
               <select class="selectpicker" name="address_ward" title="Ward" data-allow-clear id="ward-picker" data-live-search="true" data-width="fit" disabled></select>
