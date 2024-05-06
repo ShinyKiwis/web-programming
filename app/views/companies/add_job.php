@@ -96,20 +96,6 @@ if(!isset($_SESSION['user'])) {
   </div>
 </div>
 <script>
-const requires = `<?php if (isset($_SESSION['user']['cv']['requires'])) echo $_SESSION['user']['cv']['requires']; ?>`;
-const benefits = `<?php if (isset($_SESSION['user']['cv']['benefits'])) echo $_SESSION['user']['cv']['benefits']; ?>`;
-
-  if(requires != ""){
-  requires.split("@").forEach(require => {
-    $('#requireList').append('<li class="d-flex align-items-center mt-2" style="width: 15em;">' + require + ' <button class="deleteRequireBtn btn btn-danger ms-auto">Delete</button></li>');
-  })
-}
-
-if(benefits != "") {
-  benefits.split("@").forEach(benefit => {
-    $('#benefitList').append('<li class="d-flex align-items-center mt-2" style="width: 15em;">' + benefit + ' <button class="deleteBenefitBtn btn btn-danger ms-auto">Delete</button></li>');
-  })
-}
   $(document).ready(function() {
     $('#addRequireIcon').click(function(event) {
         event.preventDefault();
@@ -122,19 +108,6 @@ if(benefits != "") {
     $(document).on('click', '.deleteRequireBtn', function() {
         $(this).parent().remove();
     });
-    // $('#update-form').submit(function(event) {
-    //     var requires = [];
-    //     $('#requireList li').each(function() {
-    //         var require = $(this).text().trim().split(' ')[0];
-    //         requires.push(require);
-    //     });
-    //     var hiddenInput = $('<input>').attr({
-    //         type: 'hidden',
-    //         name: 'requires',
-    //         value: requires.join('@')
-    //     });
-    //     $(this).append(hiddenInput);
-    // });
 });
 $(document).ready(function() {
     $('#addBenefitIcon').click(function(event) {
@@ -148,19 +121,6 @@ $(document).ready(function() {
     $(document).on('click', '.deleteBenefitBtn', function() {
         $(this).parent().remove();
     });
-    // $('#update-form').submit(function(event) {
-    //     var benefits = [];
-    //     $('#benefitList li').each(function() {
-    //         var benefit = $(this).text().trim().split(' ')[0];
-    //         benefits.push(benefit);
-    //     });
-    //     var hiddenInput = $('<input>').attr({
-    //         type: 'hidden',
-    //         name: 'benefits',
-    //         value: benefits.join('@')
-    //     });
-    //     $(this).append(hiddenInput);
-    // });
 });
 
 $(document).ready(function() {

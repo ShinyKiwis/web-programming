@@ -49,6 +49,21 @@
   </div>
 </div>
 <script>
+function updateUsernameLabel() {
+  const userType = $("input[name='userType']:checked").val();
+  const usernameLabel = $("label[for='username']");
+  if (userType === "employer") {
+    usernameLabel.text("Company Name");
+  } else {
+    usernameLabel.text("Username");
+  }
+}
+
+$("input[name='userType']").change(function() {
+  updateUsernameLabel();
+});
+
+
 $("#password").on("input", function() {
   const password = $(this).val();
   const pattern = /^(?=.*\d)(?=.*[A-Z]).{8,}$/;
