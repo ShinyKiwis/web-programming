@@ -62,11 +62,15 @@ class User {
       $result = $stmt->get_result();
       if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
+
         $user_cv = CV::get_cv_by_id($id);
         $user_address = Address::get_address_by_id($user['address_id']);
+        
         if($user_cv) {
+
           $user['cv'] = $user_cv;
           $user['address'] = $user_address;
+
         }
         $stmt->close();
         return $user;

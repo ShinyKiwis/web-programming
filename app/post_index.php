@@ -14,5 +14,7 @@ if($_POST['action'] == 'login') {
   User::update($_POST);
 } else if($_POST['action'] == 'create_job') {
   var_dump($_POST);
+} else if($_POST['action'] == 'update_company') {
+  Company::update($_POST);
 }
 ?>
