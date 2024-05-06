@@ -26,16 +26,28 @@ if(!isset($_SESSION['user'])) {
         <p class="fs-4 fw-medium"><?php echo $_SESSION['user']['username']?></p>
         <div class="row">
           <div class="col-4">
-            <p><i class="fa-solid fa-person"></i><span>200+</span></p>
+            <p><i class="fa-solid fa-person"></i>
+              <?php if($_SESSION['user']['company']['size']) {
+                echo $_SESSION['user']['company']['size'];
+              } else {
+                echo '<span class="prompt">Edit to add your company size</span>';
+              }?>
+            </p>
             <p><i class="fa-solid fa-envelope"></i><?php echo $_SESSION['user']['email'] ?></p>
-            <p><i class="fa-solid fa-house"></i><span class="prompt">Edit to add your address</span></p>
+            <p><i class="fa-solid fa-house"></i><span class="prompt" id="user_address">Edit to add your company address</span></p>
           </div>
         </div>
       </div>
     </div>
     <div class="profile-section" id="description">
       <p>About Us</p>
-      <p class="prompt">Edit to add your company description</p>
+      <p>
+        <?php if($_SESSION['user']['company']['description']) {
+          echo $_SESSION['user']['company']['description'];
+        } else {
+          echo '<span class="prompt">Edit to add your company description</span>';
+        }?>
+      </p>
     </div> 
     <!-- <div class="profile-section" id="requirements">
       <p>Requirements</p>
@@ -51,3 +63,48 @@ if(!isset($_SESSION['user'])) {
     </div> 
   </div>
 </div> -->
+<script>
+const selectedAddress = `<?php echo $_SESSION['user']['address']['address']; ?>`;
+const selectedCity = `<?php echo $_SESSION['user']['address']['city']; ?>`;
+const selectedDistrict = `<?php echo $_SESSION['user']['address']['district']; ?>`;
+const selectedWard = `<?php echo $_SESSION['user']['address']['ward']; ?>`;
+
+$.ajax({
+  url: "http://localhost:8080/data/address.json",
+  method: "GET",
+  dataType: "json",
+  success: function(data) {
+    const cities = Object.values(data);
+    let address = "";
+    let selectedCityValue = "";
+    let selectedDistrictValue = "";
+    let selectedWardValue = "";
+    cities.forEach(city => {
+      if(city.slug == selectedCity) {
+        selectedCityValue = city.name_with_type;
+        city.quan_huyen.forEach(district => {
+          if(district.slug == selectedDistrict) {
+            selectedDistrictValue = district.name_with_type;
+            district.xa_phuong.forEach(ward => {
+              if(ward.slug == selectedWard) {
+                selectedWardValue = ward.name_with_type;
+              }
+            })
+          }
+        })
+      }
+    })
+    if(selectedWardValue && selectedCityValue && selectedDistrictValue) {
+      $("#user_address").removeClass("prompt");
+      $("#user_address").text([selectedAddress, selectedWardValue, selectedDistrictValue, selectedCityValue].join(", "))
+    }
+
+    cities.forEach(city => {
+      if(city.slug == desiredLocation) {
+        $("#desired_job_location").removeClass("prompt");
+        $("#desired_job_location").text(city.name_with_type);
+      }
+    })
+  }
+})
+</script>

@@ -15,8 +15,8 @@ if(!isset($_SESSION['user'])) {
   </div>
   <div class="col-10 p-4 h-100" id="profile">
   <form id="update-form" action="/post_index.php" method="POST">
-
-    <input type="hidden" name="company_id" id="company_id" value=<?php echo $_SESSION['company_id'] ?>>
+    <input type="hidden" name="user_id" id="user_id" value=<?php echo $_SESSION['user_id'] ?>>
+    <input type="hidden" name="company_id" id="company_id" value=<?php echo $_SESSION['user']['company']['id'] ?>>
     <input type="hidden" name="action" value="update_company">
 
     <div class="row" id="profile-header">
@@ -31,43 +31,29 @@ if(!isset($_SESSION['user'])) {
           <input type="file" id="uploadImage" style="display:none" accept="image/*">
       </div>
       <div class="col-10">
-          <p class="fs-4 fw-medium"><input type="text" class="form-control" name="company_name" value="<?php echo $_SESSION['user']['company']['name'] ?>" placeholder="Your company name"></p>
+          <p class="fs-4 fw-medium"><?php echo $_SESSION['user']['username']?></p>
           <div class="row">
             <div class="col-3">
-              <p><i class="fa-solid fa-person"></i><input type="text" class="form-control" name="company_size" value="<?php echo $_SESSION['user']['company']['size'] ?>" placeholder="Number of workers"></p>
-              <p><i class="fa-solid fa-envelope"></i><input type="text" class="form-control" name="company_contact_info" value="<?php echo $_SESSION['user']['company']['contact_info'] ?>" placeholder="Contact information"></p>
+              <p><i class="fa-solid fa-person"></i><input type="text" class="form-control" name="company_size" value="<?php echo $_SESSION['user']['company']['size'] ?>" placeholder="Number of employees" required></p>
+              <p><i class="fa-solid fa-envelope"></i><?php echo $_SESSION['user']['email'] ?></p>
             </div>
             <div class="row d-flex align-items-center">
               <p class="col-3 mb-0"><i class="fa-solid fa-house"></i>
-                <input type="text" class="form-control" value="<?php echo $_SESSION['user']['address']['address'] ?>" name="address_address"placeholder="Your address" />
+                <input type="text" class="form-control" value="<?php echo $_SESSION['user']['address']['address'] ?>" name="address_address" placeholder="Your address" />
               </p>
-              <select class="selectpicker" name="address_city" title="City" data-allow-clear id="city-picker" data-live-search="true" data-width="fit"></select>
-              <select class="selectpicker" name="address_district" title="District" data-allow-clear id="district-picker" data-live-search="true" data-width="fit" disabled></select>
-              <select class="selectpicker" name="address_ward" title="Ward" data-allow-clear id="ward-picker" data-live-search="true" data-width="fit" disabled></select>
+              <select class="selectpicker" name="address_city" title="City" data-allow-clear id="city-picker" data-live-search="true" data-width="fit" required></select>
+              <select class="selectpicker" name="address_district" title="District" data-allow-clear id="district-picker" data-live-search="true" data-width="fit" disabled required></select>
+              <select class="selectpicker" name="address_ward" title="Ward" data-allow-clear id="ward-picker" data-live-search="true" data-width="fit" disabled required></select>
             </div>
           </div>
         </div>
     </div>
-    <div class="profile-section" id="description">
+    <div class="profile-section mt-2" id="description">
       <p>About Us</p>
-      <textarea type="text" class="form-control" name="description" placeholder="Your company description" style="height: 100px"></textarea>
+        <textarea type="text" class="form-control" name="description" placeholder="Your company description" style="height: 100px"><?php echo $_SESSION['user']['company']['description'] ?></textarea>
       <button type="submit" id="submit" class="btn btn-primary mt-2 float-end">Update</button>
     </form>
     </div> 
-    <!-- <div class="profile-section" id="requirements">
-      <p>Requirements</p>
-      <p class="prompt">Add requirements</p>
-    </div>
-    <div class="profile-section" id="salary">
-      <p>Salary</p>
-      <p class="prompt">Add salary</p>
-    </div> 
-    <div class="profile-section" id="benefit">
-      <p>Benefit</p>
-      <p class="prompt">Add benefit</p>
-    </div> 
-  </div>
-</div> -->
 <script>
 $(document).ready(function(){
   $('#uploadImage').change(function(){
@@ -113,6 +99,9 @@ $('#uploadLink').click(function(e){
 });
 });
 let cities = []
+const selectedCity = `<?php echo $_SESSION['user']['address']['city']; ?>`;
+const selectedDistrict = `<?php echo $_SESSION['user']['address']['district']; ?>`;
+const selectedWard = `<?php echo $_SESSION['user']['address']['ward']; ?>`;
 $(document).ready(function () {
   $.ajax({
     url: "http://localhost:8080/data/address.json",
@@ -125,12 +114,25 @@ $(document).ready(function () {
         option: city.name_with_type
       }))
       $.each(citiesOptions, function(_, item) {
+        $("#location-picker").append($('<option>', {
+          value: item.value,
+          text: item.option,
+          selected: item.value === selectedCity
+        }))
         $("#city-picker").append($('<option>', {
           value: item.value,
-          text: item.option
+          text: item.option,
+          selected: item.value === selectedCity
         }))
       }) 
       $('#city-picker').selectpicker('refresh');
+      $('#location-picker').selectpicker('refresh');
+      if(selectedDistrict) {
+        populateDistrict(selectedCity);
+        if(selectedWard) {
+          populateWard(selectedDistrict)
+        }
+      }
     }
   })
 })
@@ -185,4 +187,58 @@ $("#district-picker").on("change", function() {
   }) 
   $("#ward-picker").selectpicker("refresh");
 })
+
+function populateDistrict(selectedCity) {
+ const selectedCityValue = cities.filter(city => city.slug == selectedCity)[0];
+  // Clear options value
+  $("#district-picker").find('option').remove();
+  $("#district-picker").selectpicker("destroy");
+  $("#district-picker").selectpicker();
+
+  $("#ward-picker").find('option').remove();
+  $("#ward-picker").selectpicker("destroy");
+  $("#ward-picker").selectpicker();
+
+  // Set new data
+  $("#district-picker").prop("disabled", false);
+  const districtsOptions = selectedCityValue.quan_huyen.map(district => ({
+    value: district.slug,
+    option: district.name_with_type
+  }))
+  $.each(districtsOptions, function(_, item) {
+    $("#district-picker").append($('<option>', {
+      value: item.value,
+      text: item.option,
+      selected: item.value == selectedDistrict
+    }))
+  }) 
+  $("#district-picker").selectpicker("refresh");
+}
+
+function populateWard(selectedDistrict) {
+  const selectedDistrictValue = cities
+    .filter(city => city.slug == $("#city-picker").val())[0].quan_huyen
+    .filter(district => district.slug == selectedDistrict)[0];
+
+  // Clear options value
+  $("#ward-picker").find('option').remove();
+  $("#ward-picker").selectpicker("destroy");
+  $("#ward-picker").selectpicker();
+
+  // Set new data
+  $("#ward-picker").prop("disabled", false);
+  const wardsOptions = selectedDistrictValue.xa_phuong.map(ward => ({
+    value: ward.slug,
+    option: ward.name_with_type
+  }));
+  $.each(wardsOptions, function(_, item) {
+    $("#ward-picker").append($('<option>', {
+      value: item.value,
+      text: item.option,
+      selected: item.value == selectedWard
+    }));
+  }); 
+  $("#ward-picker").selectpicker("refresh");
+}
+
 </script>

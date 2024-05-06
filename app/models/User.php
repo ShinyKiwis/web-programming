@@ -2,6 +2,7 @@
 require_once "database.php";
 require_once "CV.php";
 require_once "Address.php";
+require_once "Company.php";
 class User {
   public static function get_user_by_email($email) {
     $conn = Database::getInstance()->getConnection();
@@ -42,7 +43,11 @@ class User {
       // Get newly created user id
       $user_id = $conn->insert_id;
       // Create emptyCV
-      CV::create($user_id);
+      if($type == 'candidate') {
+        CV::create($user_id);
+      } else {
+        Company::create($user_id, $user_name, );
+      }
       Address::create($user_id);
       $stmt->close();
       exit(json_encode(array("status" => "success")));
@@ -63,15 +68,14 @@ class User {
       if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
 
-        $user_cv = CV::get_cv_by_id($id);
+        if($user['type'] == 'candidate') {
+          $user['cv'] = CV::get_cv_by_id($id);
+        } else {
+          $user['company'] = Company::get_company_by_owner_id($id);
+        }
         $user_address = Address::get_address_by_id($user['address_id']);
         
-        if($user_cv) {
-
-          $user['cv'] = $user_cv;
-          $user['address'] = $user_address;
-
-        }
+        $user['address'] = $user_address;
         $stmt->close();
         return $user;
       }
