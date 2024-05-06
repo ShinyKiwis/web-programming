@@ -24,6 +24,10 @@
           <i class="fa-solid fa-user"></i>
           <a class="nav-link" href="/home/candidate">Candidates</a>
         </li>
+        <li class="nav-item">
+          <i class="fa-solid fa-user"></i>
+          <a class="nav-link" href="#">Candidates</a>
+        </li>
       </ul>
       <div class="dropdown">
         <i class="fa-solid fa-circle-user" id="profile-icon" data-bs-toggle="dropdown" aria-expanded="false"></i>
