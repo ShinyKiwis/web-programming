@@ -1,4 +1,10 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+  ini_set('session.gc_maxlifetime', 10800);
+  session_set_cookie_params(10800);
+  session_start();
+}
+
 class Database {
   private static $instance = null;
   private $conn;

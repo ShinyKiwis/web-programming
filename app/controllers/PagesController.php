@@ -133,7 +133,7 @@ class PagesController {
         }   
       }
     } else {
-      echo "0 results";
+      echo "<div class='mx-5'>There is no items at the moment</div>";
     }
   
     // Close database connection
@@ -240,7 +240,7 @@ class PagesController {
         }   
       }
     } else {
-      echo "0 results";
+      echo "<div class='mx-5'>There is no items at the moment</div>";
     }
   }
 

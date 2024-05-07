@@ -10,23 +10,21 @@
           <i class="fa-solid fa-house"></i>
           <a class="nav-link" aria-current="page" href="/home">Home</a>
         </li>
-        <li class="nav-item">
-          <?php if(isset($_SESSION['user'])) {
-            echo '<i class="fa-solid fa-suitcase"></i>';
-            if($_SESSION['user']['type'] == 'candidate') {
-              echo '<a class="nav-link" href="#">Applied Jobs</a>';
-            } else {
-              echo '<a class="nav-link" href="#">Listed Jobs</a>';
-            }
-          }?>
-        </li>
+        <?php if(isset($_SESSION['user'])): ?>
+            <li class="nav-item">
+                <?php 
+                echo '<i class="fa-solid fa-suitcase"></i>';
+                if($_SESSION['user']['type'] == 'candidate') {
+                    echo '<a class="nav-link" href="#">Applied Jobs</a>';
+                } else {
+                    echo '<a class="nav-link" href="#">Listed Jobs</a>';
+                }
+                ?>
+            </li>
+        <?php endif; ?>
         <li class="nav-item">
           <i class="fa-solid fa-user"></i>
           <a class="nav-link" href="/home/candidate">Candidates</a>
-        </li>
-        <li class="nav-item">
-          <i class="fa-solid fa-user"></i>
-          <a class="nav-link" href="#">Candidates</a>
         </li>
       </ul>
       <div class="dropdown">

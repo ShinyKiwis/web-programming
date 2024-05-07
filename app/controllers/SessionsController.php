@@ -18,10 +18,6 @@ class SessionsController {
       if (!password_verify($password, $fetchPassword)) {
         exit(json_encode(array("status" => "error", "message" => "Your email or password is wrong!")));
       } else {
-        ini_set('session.gc_maxlifetime', 10800);
-        session_set_cookie_params(10800);
-
-        session_start();
         $_SESSION['user_id'] = $result['id'];
 
         exit(json_encode(array("status" => "success")));
@@ -32,7 +28,7 @@ class SessionsController {
   }
 
   public function destroy() {
-    session_start();
+    // session_start();
     session_destroy();
     header("Location: " . "http://localhost:8080/home");
   }

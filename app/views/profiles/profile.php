@@ -6,7 +6,7 @@ if(!isset($_SESSION['user'])) {
   header("Location: " . "http://localhost:8080/home");
 }
 ?>
-<div class="row mt-4 px-5">
+<div class="row my-4 px-5">
   <div class="col-2 d-flex flex-column gap-4" id="profile-actions">
     <button><a href="/profile/edit"><i class="fa-solid fa-pen"></i><span>Edit your profile</span></a></button>
     <button id="active"><a><i class="fa-solid fa-user"></i><span>My profile</span></a></button>

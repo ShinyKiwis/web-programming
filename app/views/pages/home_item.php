@@ -22,19 +22,18 @@
             <span class="text-danger">
             <?php echo ($row["salary"] == '' ? "Salary Negotiation" : $row["salary"]); ?>
             </span> | 
-            <span>
+            <span class="city-name">
             <?php echo $row["location"]; ?>
             </span>
           </p>
-          <p class="card-text">
-            <small class="text-body-secondary">
-                <?php echo $row["expiration"]; ?>
-            </small>
+          <p class="card-text text-body-secondary d-flex align-items-center gap-2">
+            <i class="fa-solid fa-calendar"></i>
+            <span><?php echo $row["expiration"]; ?></span>
           </p>
           <?php
             echo '<div class="badge-container">';
             echo '<span class="badge rounded-pill badge-primary">' . $row['work_arrangement'] . '</span>';
-            echo '<span class="badge rounded-pill badge-primary">' . $row['levels'] . '</span>';
+            echo '<span class="badge rounded-pill badge-primary ms-2">' . $row['levels'] . '</span>';
             echo '</div>';
           ?>
         </div>
@@ -101,3 +100,31 @@
   echo '</div>';
   ?>
 </div>
+<script>
+function getCities() {
+  $.ajax({
+    url: "http://localhost:8080/data/address.json",
+    method: "GET",
+    dataType: "json",
+    success: function(data) {
+      const cities = Object.values(data);
+      updateCityNames(cities);
+    }
+  })
+}
+
+function updateCityNames(cities) {
+  $(".city-name").each(function(_, item) {
+    const cityKey = item.innerText;
+    const cityName = getCityName(cityKey, cities)
+    item.innerText = cityName
+  });
+}
+function getCityName(cityKey) {
+  return cities.find(city => city.slug == cityKey).name_with_type
+}
+
+$(document).ready(function() {
+  getCities();
+});
+</script>

@@ -1,4 +1,7 @@
 <?php 
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 require_once "database.php";
 require_once "CV.php";
 require_once "Address.php";
@@ -46,7 +49,7 @@ class User {
       if($type == 'candidate') {
         CV::create($user_id);
       } else {
-        Company::create($user_id, $user_name, );
+        Company::create($user_id);
       }
       Address::create($user_id);
       $stmt->close();
@@ -162,7 +165,7 @@ class User {
                       $languages,
                       $user_id);
     if($stmt->execute()) {
-      session_start();
+      // session_start();
       $_SESSION['user'] = self::get_user_by_id($user_id);
       header("Location: " . "http://localhost:8080/profile");
     } else {

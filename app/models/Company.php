@@ -21,7 +21,7 @@ class Company {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssi", $company_size, $company_description, $company_id);
     if($stmt->execute()) {
-        session_start();
+        // session_start();
         $_SESSION['user'] = User::get_user_by_id($user_id);
         header("Location: " . "http://localhost:8080/company/profile");
         $stmt->close();

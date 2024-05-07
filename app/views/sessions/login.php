@@ -1,5 +1,4 @@
 <?php
-session_start();
 if(isset($_SESSION['user_id'])) {
   header("Location: http://localhost:8080/home");
   exit();
@@ -27,9 +26,6 @@ if(isset($_SESSION['user_id'])) {
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
         <input type="password" name="password" class="form-control" id="password" placeholder="Your secret password" required>
-      </div>
-      <div style="text-align: end;" class="my-2 mb-4">
-        <a href="#" class="gray-link">Forgot your password ?</a>
       </div>
       <button type="submit" class="btn btn-primary" style="width: 100%">Login</button>
       <div class="my-2">

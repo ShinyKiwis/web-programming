@@ -1,5 +1,6 @@
 <?php
 require_once 'models/User.php';
+require_once 'models/Job.php';
 require_once 'controllers/SessionsController.php';
 if($_POST['action'] == 'login') {
   $sessionController = new SessionsController();
@@ -13,7 +14,7 @@ if($_POST['action'] == 'login') {
 } else if($_POST['action'] == 'update_user') {
   User::update($_POST);
 } else if($_POST['action'] == 'create_job') {
-  var_dump($_POST);
+  Job::create($_POST);
 } else if($_POST['action'] == 'update_company') {
   Company::update($_POST);
 }

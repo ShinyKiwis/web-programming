@@ -15,7 +15,7 @@ if(!isset($_SESSION['user'])) {
   </div>
   <div class="col-10 p-4 h-100" id="profile">
   <form id="update-form" action="/post_index.php" method="POST">
-    <input type="hidden" name="user_id" id="user_id" value=<?php echo $_SESSION['user_id'] ?>>
+    <input type="hidden" name="company_id" id="company_id" value=<?php echo $_SESSION['user']['company']['id'] ?>>
     <input type="hidden" name="action" value="create_job" />
     <div class="row" id="profile-header">
       <div class="col-2  d-flex justify-content-center">

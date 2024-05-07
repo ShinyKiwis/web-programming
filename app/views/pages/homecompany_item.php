@@ -28,7 +28,7 @@
         <a href="#" class="card-title"><?php echo $row_user["username"]; ?></a>
           <p class="card-text "><a style="font-weight:bold;">Position: </a><?php echo $row["current_position"]; ?></p>
           <p class="card-text text-danger"><a style="font-weight:bold;">Expected Salary: </a><?php echo $row["desired_job_salary"]; ?></p>
-          <p class="card-text"><a style="font-weight:bold;">Location: </a><?php echo $row["desired_job_location"]; ?></p>
+          <p class="card-text"><a style="font-weight:bold;">Location: </a><span class="city-name"><?php echo $row["desired_job_location"]; ?></span></p>
           <p class="card-text"><a style="font-weight:bold;">Languages: </a><?php $languages = $row["languages"];
 
 // Check if $languages is not null and not empty
@@ -100,7 +100,7 @@ if ($languages !== null && $languages !== '') {
         <a href="#" class="card-title"><?php echo $row_user["username"]; ?></a>
           <p class="card-text "><a style="font-weight:bold;">Position: </a><?php echo $row["current_position"]; ?></p>
           <p class="card-text text-danger"><a style="font-weight:bold;">Expected Salary: </a><?php echo $row["desired_job_salary"]; ?></p>
-          <p class="card-text"><a style="font-weight:bold;">Location: </a><?php echo $row["desired_job_location"]; ?></p>
+          <p class="card-text"><a style="font-weight:bold;">Location: </a><span class=".city-name"><?php echo $row["desired_job_location"]; ?></span></p>
 
           <p class="card-text"><a style="font-weight:bold;">Languages: </a><?$languages = $row["languages"];
 
@@ -148,3 +148,31 @@ if ($languages !== null && $languages !== '') {
   echo '</div>';
   ?>
 </div>
+<script>
+function getCities() {
+  $.ajax({
+    url: "http://localhost:8080/data/address.json",
+    method: "GET",
+    dataType: "json",
+    success: function(data) {
+      const cities = Object.values(data);
+      updateCityNames(cities);
+    }
+  })
+}
+
+function updateCityNames(cities) {
+  $(".city-name").each(function(_, item) {
+    const cityKey = item.innerText;
+    const cityName = getCityName(cityKey, cities)
+    item.innerText = cityName
+  });
+}
+function getCityName(cityKey) {
+  return cities.find(city => city.slug == cityKey).name_with_type
+}
+
+$(document).ready(function() {
+  getCities();
+});
+</script>

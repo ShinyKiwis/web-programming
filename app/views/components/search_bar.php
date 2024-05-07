@@ -1,4 +1,4 @@
-<div class="mx-5 shadow-lg rounded px-2 py-4 mt-2">
+<div class="mx-5 shadow-lg rounded px-2 py-4 mt-2 mb-5">
   <form class="d-flex gap-2" id="push-form" action="" method="GET">
     <div class="input-group flex-nowrap w-50">
       <span class="input-group-text" id="addon-wrapping">

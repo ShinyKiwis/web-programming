@@ -17,11 +17,8 @@ CREATE TABLE `Addresses` (
 
 CREATE TABLE `Companies` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `name` VARCHAR(255),
   `description` VARCHAR(255),
   `size` integer,
-  `contact_info` integer,
-  `address_id` integer,
   `owner_id` integer
 );
 
@@ -37,17 +34,6 @@ CREATE TABLE `Jobs` (
   `work_arrangement` VARCHAR(255),
   `levels` VARCHAR(255),
   `company_id` integer
-);
-
-CREATE TABLE `JobsTags` (
-  `job_id` integer,
-  `tag_id` integer,
-  PRIMARY KEY (`job_id`, `tag_id`)
-);
-
-CREATE TABLE `Tags` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `name` VARCHAR(255)
 );
 
 CREATE TABLE `CVs` (
@@ -72,28 +58,7 @@ CREATE TABLE `JobsCVs` (
   PRIMARY KEY (`job_id`, `cv_id`)
 );
 
-CREATE TABLE `CVsExperiences` (
-  `cv_id` integer,
-  `experience_id` integer,
-  PRIMARY KEY (`cv_id`, `experience_id`)
-);
-
-CREATE TABLE `Experiences` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `position` VARCHAR(255),
-  `company_id` integer,
-  `startDate` date,
-  `endDate` date,
-  `description` VARCHAR(255),
-  `company_name` VARCHAR(255),
-  `type` VARCHAR(255)
-);
-
 ALTER TABLE `Companies` ADD FOREIGN KEY (`owner_id`) REFERENCES `Users` (`id`);
-
-ALTER TABLE `JobsTags` ADD FOREIGN KEY (`job_id`) REFERENCES `Jobs` (`id`);
-
-ALTER TABLE `JobsTags` ADD FOREIGN KEY (`tag_id`) REFERENCES `Tags` (`id`);
 
 ALTER TABLE `JobsCVs` ADD FOREIGN KEY (`cv_id`) REFERENCES `CVs` (`id`);
 
@@ -103,12 +68,4 @@ ALTER TABLE `Jobs` ADD FOREIGN KEY (`company_id`) REFERENCES `Companies` (`id`);
 
 ALTER TABLE `CVs` ADD FOREIGN KEY (`owner_id`) REFERENCES `Users` (`id`);
 
-ALTER TABLE `CVsExperiences` ADD FOREIGN KEY (`cv_id`) REFERENCES `CVs` (`id`);
-
-ALTER TABLE `CVsExperiences` ADD FOREIGN KEY (`experience_id`) REFERENCES `Experiences` (`id`);
-
-ALTER TABLE `Experiences` ADD FOREIGN KEY (`company_id`) REFERENCES `Companies` (`id`);
-
 ALTER TABLE `Users` ADD FOREIGN KEY (`address_id`) REFERENCES `Addresses` (`id`);
-
-ALTER TABLE `Companies` ADD FOREIGN KEY (`address_id`) REFERENCES `Addresses` (`id`);
