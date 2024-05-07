@@ -12,8 +12,8 @@
     <select class="selectpicker" name="desired_job_location" title="Location" id="city-picker" data-live-search="true" data-allow-clear="true">
     </select>
     <select class="selectpicker" name="willing_to_relocation" title="Willing to Relocation" data-allow-clear="true">
-      <option value="intern">Yes</option>
-      <option value="fresher">No</option>
+      <option value="1">Yes</option>
+      <option value="0">No</option>
     </select>
     <button id="search_btn" type="submit" class="btn btn-primary ms-auto">Search</button>
   </form>
