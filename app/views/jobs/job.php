@@ -2,9 +2,6 @@
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
-if(!isset($_SESSION['user'])) {
-  header("Location: " . "http://localhost:8080/home");
-}
 $work_arrangement_map = array(
     'onsite' => 'On site',
     'remote' => 'Remote',
@@ -35,7 +32,7 @@ $level_map = array(
         <div class="row">
           <div class="col-10">
             <p><i class="fa-solid fa-calendar"></i><?php echo date('d/m/Y', strtotime($job['expiration'])); ?></p>
-            <p><i class="fa-solid fa-envelope"></i><?php echo $_SESSION['user']['email'] ?></p>
+            <p><i class="fa-solid fa-envelope"></i><?php echo $job['email'] ?></p>
             <div class="d-flex gap-4">
               <p>
                 <i class="fa-solid fa-location-dot"></i>
@@ -70,14 +67,14 @@ $level_map = array(
       </ul>
       <p class="prompt">Edit to add benefits</p>
     </div>
-    <?php if ($_SESSION['user']['type'] == 'candidate' && $job['cv_id'] != $_SESSION['user_id']): ?>
+    <?php if (isset($_SESSION['user']) && $_SESSION['user']['type'] == 'candidate' && $job['cv_id'] != $_SESSION['user_id']): ?>
       <input type="hidden" name="user_id" id="user_id" value=<?php echo $_SESSION['user']['id'] ?>>
       <input type="hidden" name="job_id" id="user_id" value=<?php echo $job['id'] ?>>
       <input type="hidden" name="action" value="apply_job">
       <button type="submit" id="submit_btn" class="btn btn-primary mt-2 float-end">Apply</button>
     <?php endif; ?>
 </form>
-    <?php if ($_SESSION['user']['type'] == 'employer' && $_SESSION['user']['company']['id'] == $job['company_id']): ?>
+    <?php if (isset($_SESSION['user']) && $_SESSION['user']['type'] == 'employer' && $_SESSION['user']['company']['id'] == $job['company_id']): ?>
       <div class="profile-section mt-2" id="applications">
         <p>Applied Candidates</p>
         <?php foreach($applied_candidates as $candidate ) { ?>

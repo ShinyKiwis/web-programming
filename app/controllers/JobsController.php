@@ -4,7 +4,7 @@ class JobsController {
   const DEFAULT_VIEW_FOLDER = 'views/jobs/';
   public function show() {
     $job = Job::getJob($_GET['job']);
-    if($_SESSION['user']['type'] == 'employer') {
+    if(isset($_SESSION['user']) && $_SESSION['user']['type'] == 'employer') {
       $applied_candidates = Job::getAppliedCandidates($_GET['job']);
     }
     ob_start();
