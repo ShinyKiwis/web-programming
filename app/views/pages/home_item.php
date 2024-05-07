@@ -4,7 +4,7 @@
       <div class="col-md-3 d-flex justify-content-center align-items-center">
         <img 
           src="https://upload.wikimedia.org/wikipedia/commons/7/78/Ubisoft_logo.svg" 
-          class="rounded-start" 
+          class="rounded" 
           alt="company logo" 
           style="width: 8em; height: 8em;"
         />
@@ -46,7 +46,7 @@
       <div class="col-md-3 d-flex justify-content-center align-items-center">
         <img 
           src="https://upload.wikimedia.org/wikipedia/commons/7/78/Ubisoft_logo.svg" 
-          class="rounded-start" 
+          class="rounded" 
           alt="company logo" 
           style="width: 8em; height: 8em;"
         />
@@ -70,7 +70,7 @@
           <?php
             echo '<div class="badge-container">';
             echo '<span class="badge rounded-pill badge-primary">' . $row['work_arrangement'] . '</span>';
-            echo '<span class="badge rounded-pill badge-primary">' . $row['levels'] . '</span>';
+            echo '<span class="badge rounded-pill badge-primary ms-2">' . $row['levels'] . '</span>';
             echo '</div>';
           ?>
         </div>
