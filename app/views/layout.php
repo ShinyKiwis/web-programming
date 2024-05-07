@@ -33,8 +33,16 @@ if(!isset($_SESSION['user']) && isset($_SESSION['user_id'])) {
   </header>
   <main class="overflow-auto overflow-x-hidden" style="height: 100vh;">
     <?php
-      if (!in_array($current_path, $excludeSearchBarPaths) && !in_array($current_path, $excludeHeaderPaths) && !strstr($current_path, '/job') && !strstr($current_path, "/cv")) {
-        include ('components/search_bar.php');
+      if (!in_array($current_path, $excludeSearchBarPaths) && 
+          !in_array($current_path, $excludeHeaderPaths) && 
+          !strstr($current_path, '/job') && 
+          !strstr($current_path, "/cv")) {
+        if (strcmp($current_path, "/home") == 0) { #equal
+          include('components/search_bar.php');
+        } 
+        else {
+          include('components/search_bar_candidate.php');
+        };
       }
       echo $content;
     ?>

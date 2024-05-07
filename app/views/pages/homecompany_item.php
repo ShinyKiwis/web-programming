@@ -3,14 +3,14 @@
     <div class="row">
       <div class="col-md-3 d-flex justify-content-center align-items-center">
         <img 
-          src="https://upload.wikimedia.org/wikipedia/commons/7/78/Ubisoft_logo.svg" 
+          src="https://images.unsplash.com/photo-1634896941598-b6b500a502a7?q=80&w=1956&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
           class="rounded-start" 
           alt="company logo" 
           style="width: 8em; height: 8em;"
         />
       </div>
       <?php
-      $sql = " SELECT * FROM Users where Users.ID = " . $row["owner_id"];//query tên công ty -> 
+      $sql = " SELECT * FROM Users where Users.ID = " . $row["owner_id"];
       $result_2 = $conn->query($sql);
       $row_user = $result_2->fetch_assoc();
       ?>
@@ -75,14 +75,14 @@ if ($languages !== null && $languages !== '') {
     <div class="row">
       <div class="col-md-3 d-flex justify-content-center align-items-center">
         <img 
-          src="https://upload.wikimedia.org/wikipedia/commons/7/78/Ubisoft_logo.svg" 
+          src="https://images.unsplash.com/photo-1634896941598-b6b500a502a7?q=80&w=1956&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
           class="rounded-start" 
           alt="company logo" 
           style="width: 8em; height: 8em;"
         />
       </div>
       <?php
-      $sql = " SELECT * FROM Users where Users.ID = " . $row["owner_id"];//query tên công ty -> 
+      $sql = " SELECT * FROM Users where Users.ID = " . $row["owner_id"];
       $result_2 = $conn->query($sql);
       $row_user = $result_2->fetch_assoc();
       ?>
@@ -104,30 +104,25 @@ if ($languages !== null && $languages !== '') {
 
           <p class="card-text"><a style="font-weight:bold;">Languages: </a><?$languages = $row["languages"];
 
-// Check if $languages is not null and not empty
 if ($languages !== null && $languages !== '') {
-    // Split the string into an array using '@' as the delimiter
+
     $language_pairs = explode('@', $languages);
 
-    // Initialize an empty array to store the formatted strings
     $formatted_languages = array();
 
-    // Loop through each pair in the array
     foreach ($language_pairs as $pair) {
-        // Split the pair into individual parts
+
         $parts = explode(' ', $pair);
 
-        // Join the parts with space
         $formatted_pair = implode(' ', $parts);
 
-        // Add the formatted pair to the result array
+
         $formatted_languages[] = $formatted_pair;
     }
 
-    // Output the formatted strings
     echo implode(', ', $formatted_languages);
 } else {
-    // Handle case where $row["languages"] is null or empty
+
     echo "No languages specified";
 }
 

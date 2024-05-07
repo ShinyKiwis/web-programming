@@ -25,7 +25,7 @@ $level_map = array(
     <div class="row" id="profile-header">
       <div class="col-2  d-flex justify-content-center">
         <img id="avatarImg" 
-            src="https://images.unsplash.com/photo-1634896941598-b6b500a502a7?q=80&w=1956&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+            src="https://upload.wikimedia.org/wikipedia/commons/7/78/Ubisoft_logo.svg" 
             alt="profile avatar"
             style="border-radius: 9999px; width: 200px; height: 200px;"
         />
