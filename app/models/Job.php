@@ -100,7 +100,11 @@ class Job {
   public static function getJob($job_id) {
     $conn = Database::getInstance()->getConnection();
 
-    $sql = "SELECT Jobs.*, JobsCVs.cv_id FROM Jobs LEFT JOIN JobsCVs ON Jobs.id = JobsCVs.job_id WHERE Jobs.id = ?";
+    $sql = "SELECT Jobs.*, Companies.owner_id, Users.email 
+        FROM Jobs 
+        LEFT JOIN Companies ON Jobs.company_id = Companies.id
+        LEFT JOIN Users ON Companies.owner_id = Users.id 
+        WHERE Jobs.id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $job_id);
 

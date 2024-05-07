@@ -4,7 +4,7 @@
       <div class="col-md-3 d-flex justify-content-center align-items-center">
         <img 
           src="https://images.unsplash.com/photo-1634896941598-b6b500a502a7?q=80&w=1956&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-          class="rounded-start" 
+          class="rounded" 
           alt="company logo" 
           style="width: 8em; height: 8em;"
         />
@@ -76,7 +76,7 @@ if ($languages !== null && $languages !== '') {
       <div class="col-md-3 d-flex justify-content-center align-items-center">
         <img 
           src="https://images.unsplash.com/photo-1634896941598-b6b500a502a7?q=80&w=1956&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-          class="rounded-start" 
+          class="rounded" 
           alt="company logo" 
           style="width: 8em; height: 8em;"
         />

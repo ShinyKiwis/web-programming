@@ -104,9 +104,30 @@
       </ul>
       <p class="prompt">Unavailable</p>
     </div> 
+    <div class="profile-section" id="cv-pdf">
+      <p>CV</p>
+      <div id="cv-viewer" class="mt-4" style="height: 40em;"></div>
+    </div> 
   </div>
 </div>
 <script>
+function render_cv() {
+  const user_id = "<?php echo $user['id']; ?>";
+  $.ajax({
+    type: "POST",
+    url: "/post_index.php",
+    data: {"user_id": user_id, "action": "get_cv"},
+    success: function(response) {
+      const data = JSON.parse(response);
+      if(data.status === "success") {
+        PDFObject.embed("data:application/pdf;base64," + data.cv, "#cv-viewer");
+      } else {
+        $("#cv-viewer").remove();
+      }
+    }
+  })
+}
+render_cv();
 const selectedAddress = `<?php echo $user['address']['address']; ?>`;
 const selectedCity = `<?php echo $user['address']['city']; ?>`;
 const selectedDistrict = `<?php echo $user['address']['district']; ?>`;
