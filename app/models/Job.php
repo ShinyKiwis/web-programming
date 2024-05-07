@@ -28,5 +28,93 @@ class Job {
         return;
     }
   }
+
+  public static function get_job_by_id($jobId) {
+    $conn = Database::getInstance()->getConnection();
+    
+    $sql = "SELECT * FROM Jobs WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $jobId);
+
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows === 1) {
+            $job = $result->fetch_assoc();
+            $stmt->close();
+            return $job;
+        }
+    }
+
+    return null;
+  }
+
+  public static function getAllListedJobs($company_id) {
+    $conn = Database::getInstance()->getConnection();
+    $sql = "SELECT * FROM Jobs WHERE company_id = ?";
+    $stmt = $conn->prepare($sql);
+    
+    $stmt->bind_param("i", $company_id);
+    
+    if ($stmt->execute()) {
+      $result = $stmt->get_result();
+      
+      $jobs = array();
+      
+      while ($row = $result->fetch_assoc()) {
+        $jobs[] = $row;
+      }
+      
+      $stmt->close();
+      
+      return $jobs;
+    } else {
+      error_log("Error executing query: " . $stmt->error);
+      return null;
+    }
+  }
+
+  public static function getAppliedCandidates($job_id) {
+    $conn = Database::getInstance()->getConnection();
+    
+    $sql = "SELECT JobsCVs.cv_id, Users.username FROM JobsCVs LEFT JOIN Users ON JobsCVs.cv_id = Users.id WHERE JobsCVs.job_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $job_id);
+
+    $appliedCandidates = [];
+
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        
+        while ($row = $result->fetch_assoc()) {
+            $appliedCandidates[] = $row;
+        }
+        
+        $stmt->close();
+        return $appliedCandidates;
+    }
+
+    return [];
+  }
+
+  public static function getJob($job_id) {
+    $conn = Database::getInstance()->getConnection();
+
+    $sql = "SELECT Jobs.*, JobsCVs.cv_id FROM Jobs LEFT JOIN JobsCVs ON Jobs.id = JobsCVs.job_id WHERE Jobs.id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $job_id);
+
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $job = $result->fetch_assoc();
+        $stmt->close();
+        return $job;
+    } else {
+        return null;
+    }
+  }
 }
 ?>

@@ -6,6 +6,7 @@ require_once "database.php";
 require_once "CV.php";
 require_once "Address.php";
 require_once "Company.php";
+require_once "Job.php";
 class User {
   public static function get_user_by_email($email) {
     $conn = Database::getInstance()->getConnection();
@@ -109,6 +110,49 @@ class User {
     } else {
       exit(json_encode(array("status" => "error")));
     }
+  }
+
+  public static function applyJob($postData) {
+    $conn = Database::getInstance()->getConnection();
+    $job_id = $postData['job_id'];
+    $user_id = $postData['user_id'];
+
+    $sql = "INSERT INTO JobsCVs (job_id, cv_id) VALUES (?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $job_id, $user_id);
+
+    if ($stmt->execute()) {
+        $stmt->close();
+        header("Location: " . "http://localhost:8080/profile/applied-job");
+        return;
+    } else {
+        error_log("Error applying for job: " . $conn->error);
+        return;
+    }
+  }
+
+  public static function getAppliedJobs() {
+    $user_id = $_SESSION['user']['id'];
+    $conn = Database::getInstance()->getConnection();
+    
+    $sql = "SELECT * FROM JobsCVs WHERE cv_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+
+    $appliedJobs = [];
+
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        
+        while ($row = $result->fetch_assoc()) {
+            $appliedJobs[] = Job::get_job_by_id($row['job_id']);
+        }
+        
+        $stmt->close();
+        return $appliedJobs;
+    }
+
+    return [];  
   }
 
   public static function update($postData) {

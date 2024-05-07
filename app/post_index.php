@@ -17,5 +17,7 @@ if($_POST['action'] == 'login') {
   Job::create($_POST);
 } else if($_POST['action'] == 'update_company') {
   Company::update($_POST);
+} else if($_POST['action'] == 'apply_job') {
+  User::applyJob($_POST);
 }
 ?>

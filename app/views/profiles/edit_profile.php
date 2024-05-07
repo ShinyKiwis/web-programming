@@ -10,8 +10,8 @@ if(!isset($_SESSION['user'])) {
   <div class="col-2 d-flex flex-column gap-4" id="profile-actions">
     <button id="active"><a href="/profile/edit"><i class="fa-solid fa-pen"></i><span>Edit your profile</span></a></button>
     <button><a href="/profile"><i class="fa-solid fa-user"></i><span>My profile</span></a></button>
-    <button><a><i class="fa-solid fa-suitcase"></i><span>My applied jobs</span></a></button>
-    <button><a><i class="fa-solid fa-file"></i><span>My CV</span></a></button>
+    <button><a href="/profile/applied-job"><i class="fa-solid fa-suitcase"></i><span>My applied jobs</span></a></button>
+    <button><a href="/profile/cv"><i class="fa-solid fa-file"></i><span>My CV</span></a></button>
   </div>
     <div class="col-10 p-4" id="profile">
     <form id="update-form" action="/post_index.php" method="POST">

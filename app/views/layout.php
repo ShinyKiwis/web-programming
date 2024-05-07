@@ -25,7 +25,7 @@ if(!isset($_SESSION['user']) && isset($_SESSION['user_id'])) {
     <?php
       $current_path = $_SERVER['REQUEST_URI']; 
       $excludeHeaderPaths = array("/login", "/register");
-      $excludeSearchBarPaths = array("/profile", "/profile/edit", "/profile/cv", "/company/profile", "/company/profile/edit", "/company/add-job");
+      $excludeSearchBarPaths = array("/profile", "/profile/edit", "/profile/applied-job", "/profile/cv", "/company/profile", "/company/profile/edit", "/company/add-job", "/company/list-job");
       if (!in_array($current_path, $excludeHeaderPaths)) {
         include('components/header.php');
       }
@@ -33,7 +33,7 @@ if(!isset($_SESSION['user']) && isset($_SESSION['user_id'])) {
   </header>
   <main class="overflow-auto overflow-x-hidden" style="height: 100vh;">
     <?php
-      if (!in_array($current_path, $excludeSearchBarPaths) && !in_array($current_path, $excludeHeaderPaths)) {
+      if (!in_array($current_path, $excludeSearchBarPaths) && !in_array($current_path, $excludeHeaderPaths) && !strstr($current_path, '/job') && !strstr($current_path, "/cv")) {
         include ('components/search_bar.php');
       }
       echo $content;

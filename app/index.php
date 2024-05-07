@@ -7,9 +7,13 @@ $routes = [
   "/profile" => 'ProfilesController#show',
   "/profile/edit" => 'ProfilesController#edit',
   "/profile/cv" => "UsersController#upload_cv",
+  "/profile/applied-job" => "ProfilesController#getAppliedJobs",
+  "/cv" => "UsersController#get_cv",
   "/company/profile" => 'CompaniesController#show',
   "/company/profile/edit" => 'CompaniesController#edit',
   "/company/add-job" => 'CompaniesController#add_job',
+  "/company/list-job" => 'CompaniesController#list_job',
+  "/job" => 'JobsController#show',
   "/home/candidate" => 'PagesController#candidate',
 ];
 
@@ -17,8 +21,8 @@ $url = $_SERVER['REQUEST_URI'];
 $urlParts = explode('?', $url);
 
 if($urlParts[0] == "/welcome") {
-  ob_start();
   $pageTitle = "Welcome | Work Seekers";
+  ob_start();
   include("views/welcome.html");
 } else if(array_key_exists($urlParts[0], $routes)) {
   $mapping = $routes[$urlParts[0]];
