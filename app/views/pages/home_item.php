@@ -11,7 +11,7 @@
       </div>
       <div class="col-md-9">
         <div class="card-body">
-          <a href="#" class="card-title"><?php echo $row["name"]; ?></a>
+          <a href="/job?job=<?php echo $row["id"];?>" class="card-title"><?php echo $row["name"]; ?></a>
           <p class="card-text">
             <span class="text-danger">
             <?php echo ($row["salary"] == '' ? "Salary Negotiation" : $row["salary"]); ?>
@@ -53,7 +53,7 @@
       </div>
       <div class="col-md-9">
         <div class="card-body">
-          <a href="#" class="card-title"><?php echo $row["name"]; ?></a>
+          <a href="/job?job=<?php echo $row["id"];?>" class="card-title"><?php echo $row["name"]; ?></a>
           <p class="card-text">
             <span class="text-danger">
             <?php echo ($row["salary"] == '' ? "Salary Negotiation" : $row["salary"]); ?>
