@@ -9,15 +9,9 @@
           style="width: 8em; height: 8em;"
         />
       </div>
-      <?php
-      $sql = " SELECT * FROM Companies where Companies.ID = " . $row["company_id"];//query tên công ty -> 
-      $result_2 = $conn->query($sql);
-      $row_company = $result_2->fetch_assoc();
-      ?>
       <div class="col-md-9">
         <div class="card-body">
           <a href="#" class="card-title"><?php echo $row["name"]; ?></a>
-          <p class="card-text"><?php echo $row_company["name"]; ?></p>
           <p class="card-text">
             <span class="text-danger">
             <?php echo ($row["salary"] == '' ? "Salary Negotiation" : $row["salary"]); ?>
@@ -59,17 +53,12 @@
       </div>
       <div class="col-md-9">
         <div class="card-body">
-          <?php
-          $sql = "SELECT * FROM Tags INNER JOIN JobsTags ON Tags.id = JobsTags.tag_id where JobsTags.job_id =". $row["id"] ;//query JobsTags join với tag luôn -> 
-          $result_3 = $conn->query($sql);
-          ?>
           <a href="#" class="card-title"><?php echo $row["name"]; ?></a>
-          <p class="card-text"><?php echo $row_company["name"]; ?></p>
           <p class="card-text">
             <span class="text-danger">
             <?php echo ($row["salary"] == '' ? "Salary Negotiation" : $row["salary"]); ?>
             </span> | 
-            <span>
+            <span class="city-name">
             <?php echo $row["location"]; ?>
             </span>
           </p>

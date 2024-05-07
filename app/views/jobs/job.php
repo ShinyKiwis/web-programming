@@ -58,6 +58,7 @@ $level_map = array(
       <p>Requirements</p>
       <ul id="requirementList">
       </ul>
+      <p class="prompt">Edit to add requirements</p>
     </div>
     <div class="profile-section" id="salary">
       <p>Salary</p>
@@ -67,6 +68,7 @@ $level_map = array(
       <p>Benefit</p>
       <ul id="benefitList">
       </ul>
+      <p class="prompt">Edit to add benefits</p>
     </div>
     <?php if ($_SESSION['user']['type'] == 'candidate' && $job['cv_id'] != $_SESSION['user_id']): ?>
       <input type="hidden" name="user_id" id="user_id" value=<?php echo $_SESSION['user']['id'] ?>>
@@ -112,4 +114,22 @@ function getCityName(cityKey, cities) {
 $(document).ready(function() {
   getCities();
 });
+const requirements = `<?php echo $job['requirements']; ?>`;
+const benefits = `<?php echo $job['benefits']; ?>`;
+if(requirements.split("@").length > 0) {
+  $("#requirements .prompt").remove();
+}
+
+if(benefits.split("@").length > 0) {
+  $("#benefit .prompt").remove();
+}
+
+requirements.split("@").forEach(requirement => {
+  $('#requirementList').append('<li class="d-flex align-items-center mt-2" style="width: 15em;">' + requirement + '</li>');
+})
+
+benefits.split("@").forEach(benefit => {
+  $('#benefitList').append('<li class="d-flex align-items-center mt-2" style="width: 15em;">' + benefit + '</li>');
+})
+
 </script>
