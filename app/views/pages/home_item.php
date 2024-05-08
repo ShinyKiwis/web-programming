@@ -62,10 +62,11 @@
             <?php echo $row["location"]; ?>
             </span>
           </p>
-          <p class="card-text">
-            <small class="text-body-secondary">
+          <p class="card-text text-body-secondary">
+            <i class="fa-solid fa-calendar"></i>
+            <span>
                 <?php echo $row["expiration"]; ?>
-            </small>
+            </span>
           </p>
           <?php
             echo '<div class="badge-container">';
